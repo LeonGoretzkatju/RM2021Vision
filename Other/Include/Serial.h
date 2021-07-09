@@ -15,9 +15,9 @@ public:
     Serial(int n_speed = 115200, char n_event = 'N', int n_bits = 8, int n_stop = 1);
     ~Serial();
 
-    bool InitPort(int n_speed = 115200, char n_event = 'N', int n_bits = 8, int n_stop = 1);
-    bool WriteData(const unsigned char* p_data, unsigned int length);
-    bool ReadData(unsigned char* buffer, unsigned int length);
+    bool init_port(int n_speed = 115200, char n_event = 'N', int n_bits = 8, int n_stop = 1);
+    bool write_data(const unsigned char* p_data, unsigned int length);
+    bool read_data(unsigned char* buffer, unsigned int length);
 
 };
 

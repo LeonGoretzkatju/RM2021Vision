@@ -11,7 +11,7 @@ using namespace std;
 // default config
 Serial::Serial(int n_speed = 115200, char n_event = 'N', int n_bits = 8, int n_stop = 1) : 
             n_speed(n_speed), n_event(n_event), n_bits(n_bits), n_stop(n_stop){
-    if(!InitPort(n_speed, n_event, n_bits, n_stop)){
+    if(!init_port(n_speed, n_event, n_bits, n_stop)){
         cout << "cannot init serial" << endl;
     }
 }
@@ -22,7 +22,7 @@ Serial::~Serial(){
     }
 }
 
-bool Serial::InitPort(int n_speed = 115200, char n_event = 'N', int n_bits = 8, int n_stop = 1){
+bool Serial::init_port(int n_speed = 115200, char n_event = 'N', int n_bits = 8, int n_stop = 1){
     const char* ttl = "/dev/ttyTHS0";
     if((fd = open(ttl, O_RDWR | O_NOCTTY | O_NDELAY)) < 0){
         return false;
@@ -125,7 +125,7 @@ bool Serial::set_opt(int fd, int n_speed, char n_event, int n_bits, int n_stop){
     return true;
 }
 
-bool Serial::WriteData(const unsigned char* p_data, unsigned int length){
+bool Serial::write_data(const unsigned char* p_data, unsigned int length){
     if(write(fd, p_data, length) == -1) {
         cout << "write failed" << endl;
         return false;
@@ -133,7 +133,7 @@ bool Serial::WriteData(const unsigned char* p_data, unsigned int length){
     return true;
 }
 
-bool Serial::ReadData(unsigned char* buffer, unsigned int length){
+bool Serial::read_data(unsigned char* buffer, unsigned int length){
     if(read(fd, buffer, length) == -1){
         cout << "read failed" << endl;
         return false;
