@@ -11,8 +11,16 @@ using namespace std;
 // default config
 Serial::Serial(int n_speed, char n_event, int n_bits, int n_stop) : 
             n_speed(n_speed), n_event(n_event), n_bits(n_bits), n_stop(n_stop){
-    if(!init_port(n_speed, n_event, n_bits, n_stop)){
-        cout << "cannot init serial" << endl;
+    if (wait_uart) {
+        printf("Wait for serial be ready!");
+        while (!init_port(n_speed, n_event, n_bits, n_stop));
+        printf("Port set successfully!");
+    } else {
+        if (init_port(n_speed, n_event, n_bits, n_stop)) {
+            printf("Port set successfully!");
+        } else {
+            printf("Port set fail!");
+        }
     }
 }
 
@@ -22,15 +30,34 @@ Serial::~Serial(){
     }
 }
 
+string Serial::get_uart_dev_name() {
+    FILE *ls = popen("ls /dev/ttyUSB* --color=never", "r");
+    char name[20] = {0};
+    fscanf(ls, "%s", name);
+    return name;
+}
+
 bool Serial::init_port(int n_speed, char n_event, int n_bits, int n_stop){
-    const char* ttl = "/dev/ttyTHS0";
-    if((fd = open(ttl, O_RDWR | O_NOCTTY | O_NDELAY)) < 0){
+    string name = get_uart_dev_name();
+    cout << name << endl;
+    if (name == "") {
+        return false;
+    }
+
+    int chmod = system("echo 200902 | sudo -S chmod 777 /dev/ttyUSB*");
+    if(chmod == -1){
+        cout << "chmod false" << endl;
+    }
+
+    if ((fd = open(name.data(), O_RDWR | O_NOCTTY | O_NDELAY)) < 0) {
+        cout << "maybe chmod" <<endl;
         return false;
     }
 
     if(!set_opt(fd, n_speed, n_event, n_bits, n_stop)){
         return false;
     }
+    return true;
 }
 
 bool Serial::set_opt(int fd, int n_speed, char n_event, int n_bits, int n_stop){
@@ -126,16 +153,34 @@ bool Serial::set_opt(int fd, int n_speed, char n_event, int n_bits, int n_stop){
 }
 
 bool Serial::write_data(const unsigned char* p_data, unsigned int length){
-    if(write(fd, p_data, length) == -1) {
-        cout << "write failed" << endl;
+    int cnt = 0, curr = 0;
+    if (fd <= 0){
+        if(wait_uart){
+            init_port(n_speed, n_event, n_bits, n_stop);
+        }
+        return false;
+    }
+    while ((curr = write(fd, p_data + cnt, length - cnt)) > 0 && (cnt += curr) < length);
+    if (curr < 0) {
+        printf("Serial offline write!");
+        close(fd);
+        if (wait_uart) {
+            init_port(n_speed, n_event, n_bits, n_stop);
+        }
         return false;
     }
     return true;
 }
 
 bool Serial::read_data(unsigned char* buffer, unsigned int length){
-    if(read(fd, buffer, length) == -1){
-        cout << "read failed" << endl;
+    int cnt = 0, curr = 0;
+    while ((curr = read(fd, buffer + cnt, length - cnt)) > 0 && (cnt += curr) < length);
+    if (curr < 0) {
+        printf("Serial offline read!");
+        close(fd);
+        if (wait_uart) {
+            init_port(n_speed, n_event, n_bits, n_stop);
+        }
         return false;
     }
     return true;

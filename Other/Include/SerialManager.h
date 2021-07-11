@@ -7,15 +7,14 @@
 using namespace cv;
 // 这里完成对串口消息的封装，应用层
 // 文件传输结构
+
 struct ReceiveData{
     float shoot_speed;   // 射速
     float curr_yaw;      // 当前云台yaw角度
     float curr_pitch;    // 当前云台pitch角
-    uint8_t state;       // 当前状态，自瞄-大符-小符
-    uint8_t mark;        // 云台角度标记位
-    uint8_t enemy_color; // 敌方颜色
-    int delta_x = 0;     // 能量机关x轴补偿量
-    int delta_y = 0;     // 能量机关y轴补偿量
+    // uint8_t state;       // 当前状态，自瞄-大符-小符
+    // uint8_t mark;        // 云台角度标记位
+    // uint8_t enemy_color; // 敌方颜色
 };
 
 struct SendData{
@@ -28,7 +27,6 @@ void uart_receive(Serial *p_serial);
 
 class SerialManager{
 private:
-    Serial* m_serial;
 
 public:
     SerialManager();
@@ -38,9 +36,7 @@ public:
     SendData send_data;
 
     void uart_send(Point2f angle, bool fire);
-    Serial* get_serial(){
-        return this->m_serial;
-    }
+    Serial* m_serial;
 };
 
 

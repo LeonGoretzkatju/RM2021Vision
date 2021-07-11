@@ -1,7 +1,7 @@
 #include "SerialManager.h"
 #include <iostream>
 
-extern SerialManager serial_manager;
+extern SerialManager* serial_manager;
 
 
 SerialManager::SerialManager(){
@@ -13,11 +13,13 @@ SerialManager::~SerialManager(){
 }
 
 void uart_receive(Serial *p_serial){
+    cout << "thread" << endl;
     char buffer[40];
     while (true) {
         memset(buffer, 0, sizeof(buffer));
-        p_serial->read_data((uint8_t *) buffer, sizeof(ReceiveData));
-        memcpy(&serial_manager.receive_data, buffer, sizeof(ReceiveData));
+        p_serial->read_data((uint8_t *) buffer, sizeof(ReceiveData)+1);
+        if (buffer[sizeof(ReceiveData)] == '\n')
+        memcpy(&serial_manager->receive_data, buffer, sizeof(ReceiveData));
     }
 }
 
@@ -28,8 +30,9 @@ void SerialManager::uart_send(Point2f angle, bool fire){
     send_data.final_yaw = angle.x;
     send_data.fire = fire;
     memset(buffer, 0, sizeof(buffer));
-    memcpy(&buffer, (void *)&send_data, sizeof(send_data));
-    Serial* serial = this->get_serial();
-    serial->write_data((uint8_t*) buffer, sizeof(send_data));
-    
+    memcpy(&buffer, (void *)&send_data, sizeof(SendData));
+    Serial* serial = this->m_serial;
+    if(serial->write_data((uint8_t*) buffer, sizeof(send_data))){
+        cout << "send" << endl;
+    }
 }

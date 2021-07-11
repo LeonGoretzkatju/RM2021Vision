@@ -7,6 +7,8 @@
 #IncludeRegexTransform: 
 
 ../Other/Include/Serial.h
+string
+-
 
 ../Other/Include/SerialManager.h
 Serial.h
@@ -17,10 +19,16 @@ opencv2/core/core.hpp
 /home/hjc/workspace/rm2021/TJU_RM_2021/Main.cpp
 Other/Include/SerialManager.h
 /home/hjc/workspace/rm2021/TJU_RM_2021/Other/Include/SerialManager.h
+iostream
+-
 thread
+-
+unistd.h
 -
 
 /home/hjc/workspace/rm2021/TJU_RM_2021/Other/Include/Serial.h
+string
+-
 
 /home/hjc/workspace/rm2021/TJU_RM_2021/Other/Include/SerialManager.h
 Serial.h
