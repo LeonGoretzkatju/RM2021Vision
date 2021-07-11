@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/hjc/workspace/rm2021/TJU_RM_2021/Main.cpp" "/home/hjc/workspace/rm2021/TJU_RM_2021/build/CMakeFiles/TJU-RM-2021.dir/Main.cpp.o"
-  "/home/hjc/workspace/rm2021/TJU_RM_2021/Other/Src/Serial.cpp" "/home/hjc/workspace/rm2021/TJU_RM_2021/build/CMakeFiles/TJU-RM-2021.dir/Other/Src/Serial.cpp.o"
-  "/home/hjc/workspace/rm2021/TJU_RM_2021/Other/Src/SerialManager.cpp" "/home/hjc/workspace/rm2021/TJU_RM_2021/build/CMakeFiles/TJU-RM-2021.dir/Other/Src/SerialManager.cpp.o"
-  "/home/hjc/workspace/rm2021/TJU_RM_2021/Tools/Src/Utils.cpp" "/home/hjc/workspace/rm2021/TJU_RM_2021/build/CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o"
+  "/home/nuc/rm2021/Main.cpp" "/home/nuc/rm2021/build/CMakeFiles/TJU-RM-2021.dir/Main.cpp.o"
+  "/home/nuc/rm2021/Other/Src/Serial.cpp" "/home/nuc/rm2021/build/CMakeFiles/TJU-RM-2021.dir/Other/Src/Serial.cpp.o"
+  "/home/nuc/rm2021/Other/Src/SerialManager.cpp" "/home/nuc/rm2021/build/CMakeFiles/TJU-RM-2021.dir/Other/Src/SerialManager.cpp.o"
+  "/home/nuc/rm2021/Tools/Src/Utils.cpp" "/home/nuc/rm2021/build/CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -16,7 +16,6 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../Armor/Include"
   "../Tools/Include"
   "../Other/Include"
-  "/usr/local/include"
   "/usr/local/include/opencv"
   )
 

@@ -3,8 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/TJU-RM-2021.dir/Other/Src/Serial.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Other/Src/SerialManager.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o"
-  "TJU-RM-2021.pdb"
   "TJU-RM-2021"
+  "TJU-RM-2021.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
