@@ -19,22 +19,26 @@ struct ReceiveData{
 };
 
 struct SendData{
-    float final_yaw;
+    float final_yaw;    // 最终偏转角
     float final_pitch;
-    bool fire;
+    bool fire;          // 发射指令
 };
 
 void uart_receive(Serial *p_serial);
 
 class SerialManager{
 private:
-    Serial m_serial;
+    Serial* m_serial;
 
 public:
-    void uart_send(Point2f angle, bool fire);
+    SerialManager();
+    ~SerialManager();
+
     ReceiveData receive_data;
     SendData send_data;
-    Serial get_serial(){
+
+    void uart_send(Point2f angle, bool fire);
+    Serial* get_serial(){
         return this->m_serial;
     }
 };

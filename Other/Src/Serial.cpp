@@ -9,7 +9,7 @@
 using namespace std;
 
 // default config
-Serial::Serial(int n_speed = 115200, char n_event = 'N', int n_bits = 8, int n_stop = 1) : 
+Serial::Serial(int n_speed, char n_event, int n_bits, int n_stop) : 
             n_speed(n_speed), n_event(n_event), n_bits(n_bits), n_stop(n_stop){
     if(!init_port(n_speed, n_event, n_bits, n_stop)){
         cout << "cannot init serial" << endl;
@@ -18,11 +18,11 @@ Serial::Serial(int n_speed = 115200, char n_event = 'N', int n_bits = 8, int n_s
 
 Serial::~Serial(){
     if(!close(fd)){
-        cout << "" << endl;
+        cout << "error close" << endl;
     }
 }
 
-bool Serial::init_port(int n_speed = 115200, char n_event = 'N', int n_bits = 8, int n_stop = 1){
+bool Serial::init_port(int n_speed, char n_event, int n_bits, int n_stop){
     const char* ttl = "/dev/ttyTHS0";
     if((fd = open(ttl, O_RDWR | O_NOCTTY | O_NDELAY)) < 0){
         return false;

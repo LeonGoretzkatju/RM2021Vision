@@ -1,6 +1,16 @@
 #include "SerialManager.h"
+#include <iostream>
 
-extern  SerialManager serial_manager;
+extern SerialManager serial_manager;
+
+
+SerialManager::SerialManager(){
+    m_serial = new Serial();
+}
+
+SerialManager::~SerialManager(){
+    delete m_serial;
+}
 
 void uart_receive(Serial *p_serial){
     char buffer[40];
@@ -19,6 +29,7 @@ void SerialManager::uart_send(Point2f angle, bool fire){
     send_data.fire = fire;
     memset(buffer, 0, sizeof(buffer));
     memcpy(&buffer, (void *)&send_data, sizeof(send_data));
-    this->m_serial.write_data((uint8_t*) buffer, sizeof(send_data));
+    Serial* serial = this->get_serial();
+    serial->write_data((uint8_t*) buffer, sizeof(send_data));
     
 }

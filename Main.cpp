@@ -1,12 +1,15 @@
-#include "SerialManager.h"
+#include "Other/Include/SerialManager.h"
 #include <thread>
 
 using namespace std;
 
-extern void uart_receive(Serial* p_serial);
+// void uart_receive(Serial* p_serial);
 
-SerialManager serial_manager;
+SerialManager* serial_manager = nullptr;
 
 int main(){
-    thread receive(uart_receive, &serial_manager.get_serial());
+    serial_manager = new SerialManager();
+    Serial* serial = serial_manager->get_serial();
+    thread receive(uart_receive, serial);
+    
 }
