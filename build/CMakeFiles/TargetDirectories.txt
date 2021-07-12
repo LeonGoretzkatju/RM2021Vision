@@ -1,3 +1,0 @@
-/home/hjc/workspace/rm2021/TJU_RM_2021/build/CMakeFiles/rebuild_cache.dir
-/home/hjc/workspace/rm2021/TJU_RM_2021/build/CMakeFiles/TJU-RM-2021.dir
-/home/hjc/workspace/rm2021/TJU_RM_2021/build/CMakeFiles/edit_cache.dir
