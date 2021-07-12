@@ -22,6 +22,6 @@ int main(){
              << serial_manager->receive_data.curr_yaw << endl
              << serial_manager->receive_data.shoot_speed << endl;
         serial_manager->uart_send(test, true);
-        sleep(0.1);
+        sleep(1);
     }
 }
