@@ -1,5 +1,6 @@
 #include "Other/Serial/Include/SerialManager.h"
 #include "Other/Camera/Include/CameraWrapper.hpp"
+#include "Armor/Include/ArmorFinder.h"
 #include <iostream>
 #include <thread>
 #include <unistd.h>
@@ -9,23 +10,47 @@ using namespace std;
 // void uart_receive(Serial* p_serial);
 
 SerialManager* serial_manager = nullptr;
-CameraWrapper* camera_wrapper = nullptr;
+Wrapper* wrapper = nullptr;
 
 int main(){
     serial_manager = new SerialManager();
-    camera_wrapper = new CameraWrapper(5, 100, 2);
-    //
-    camera_wrapper->init();
+    Serial* serial = serial_manager->m_serial;
+    thread receive(uart_receive, serial);
 
-    cv::Mat src;
+    uint8_t state = serial_manager->receive_data.state;
+    uint8_t enemy_color = serial_manager->receive_data.enemy_color;
+    ArmorFinder* armor_finder = new ArmorFinder(enemy_color);
+
     while (true) {
-        camera_wrapper->readCallback(src);
-        cv::imshow("test camera wrapper.", src);
-        cv::waitKey(1);
+        cv::Mat src;
+        // if from camera
+        wrapper = new CameraWrapper(5, 100, 2);
+        wrapper->init();
+        // else if from video
+        // wrapper = new VideoWrapper();
+
+        bool change_mode = true; // mode changed?
+        const int armor_mode = 1;
+        const int energy_mode = 2;
+
+        do{
+            wrapper->read(src);
+            switch(state){
+                case armor_mode : 
+                    armor_finder->run(src);
+                break;
+                case energy_mode : 
+                    // energy->run(src);
+                break;
+            }
+            cv::imshow("test camera wrapper.", src);
+            cv::waitKey(1);
+        }while(change_mode);
+        
+
+        
     }
 
-    // Serial* serial = serial_manager->m_serial;
-    // thread receive(uart_receive, serial);
     // float i = 0;
     // Point2f test;
     // test.x = 3.14;

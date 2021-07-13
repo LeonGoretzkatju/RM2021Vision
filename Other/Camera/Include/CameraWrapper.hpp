@@ -36,7 +36,9 @@ public:
     ~CameraWrapper() final;
 
     bool init() final;
-    bool read(cv::Mat& src) final;
+    bool read(cv::Mat& src){
+        return readCallback(src);
+    }
     bool readRaw(cv::Mat& src);
     bool readProcessed(cv::Mat& src);
     bool readCallback(cv::Mat& src);
