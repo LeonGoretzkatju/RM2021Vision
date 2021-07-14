@@ -1,8 +1,9 @@
 #ifndef __UTILL_H_
 #define __UTILL_H_
 
-double getPointLength(const cv::Point2f &p) {
-    return sqrt(p.x * p.x + p.y * p.y);
-}
+#include <opencv2/core/core.hpp>
+
+double getPointLength(const cv::Point2f &p);
+
 
 #endif

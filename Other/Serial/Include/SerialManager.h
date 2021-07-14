@@ -1,8 +1,8 @@
 #ifndef __serial_manager_h_
 #define __serial_manager_h_
 
-#include "Serial.h"
 #include <opencv2/core/core.hpp>
+#include "Serial.h"
 
 using namespace cv;
 // 这里完成对串口消息的封装，应用层

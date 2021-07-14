@@ -7,7 +7,7 @@
 
 class Wrapper {
 public:
-    virtual ~Wrapper() = default;;
+    virtual ~Wrapper() = default;
     virtual bool init() = 0;
     virtual bool read(cv::Mat &src) = 0;
 };

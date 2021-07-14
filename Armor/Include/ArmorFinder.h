@@ -7,7 +7,7 @@
 #include "../../Other/Serial/Include/SerialManager.h"
 #include "../../Tools/Include/Utils.h" 
 #include <opencv2/core/core.hpp>
-#include <opencv2/tracking/tracker.hpp>
+#include <opencv2/video/tracking.hpp>
 
 #define BLOB_RED    ENEMY_RED
 #define BLOB_BLUE   ENEMY_BLUE
@@ -21,7 +21,7 @@ class ArmorFinder{
 private:
     typedef std::vector<Armor> Armors;
     Armors armors;
-    typedef cv::TrackerKCF TrackerToUse;                // Tracker类型定义
+    typedef cv::TrackerMIL TrackerToUse;                // Tracker类型定义
 
     typedef enum{
         SEARCHING_STATE, TRACKING_STATE

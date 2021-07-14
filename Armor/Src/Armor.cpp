@@ -32,7 +32,14 @@ double Armor::lengthDistanceRatio() const {
     }
 }
 
+// to do
+
 // 计算装甲板到摄像头的距离
 double Armor::getBoxDistance() const {
-    
+    return 0;
+}
+
+// 装甲板的优先级比较
+bool Armor::operator<(const Armor &box) const {
+    return 0;
 }
