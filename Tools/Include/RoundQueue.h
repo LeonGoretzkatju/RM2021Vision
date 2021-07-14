@@ -1,12 +1,12 @@
-#ifndef ROUND_QUEUE_H
-#define ROUND_QUEUE_H
+#ifndef __ROUND_QUEUE_H_
+#define __ROUND_QUEUE_H_
 
 #include <opencv4/opencv2/opencv.hpp>
 #include <mutex>
 #include <condition_variable>
 
 
-template<class type, int length>
+template<typename type, int length>
 class RoundQueue {
 private:
     type data[length];

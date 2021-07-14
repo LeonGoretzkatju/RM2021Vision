@@ -2,7 +2,7 @@
 // Created by zhikun on 18-11-7.
 //
 #include <iostream>
-#include "../Include/CameraWrapper.hpp"
+#include "../Include/CameraWrapper.h"
 #include "../Include/CameraConfig.h"
 // #include "include/CameraApi.h"
 

@@ -1,9 +1,9 @@
-#ifndef CAMERA_WRAPPER_H
-#define CAMERA_WRAPPER_H
+#ifndef __CAMERA_WRAPPER_H_
+#define __CAMERA_WRAPPER_H_
 
-#include "Wrapper.hpp"
+#include "Wrapper.h"
 #include "CameraApi.h" // Some useful api from mind vision.
-#include "../../../Tools/Include/RoundQueue.hpp"
+#include "../../../Tools/Include/RoundQueue.h"
 
 
 class CameraWrapper: public Wrapper {

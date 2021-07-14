@@ -1,5 +1,5 @@
 #include "Other/Serial/Include/SerialManager.h"
-#include "Other/Camera/Include/CameraWrapper.hpp"
+#include "Other/Camera/Include/CameraWrapper.h"
 #include "Armor/Include/ArmorFinder.h"
 #include <iostream>
 #include <thread>
@@ -17,7 +17,6 @@ int main(){
     Serial* serial = serial_manager->m_serial;
     thread receive(uart_receive, serial);
 
-    uint8_t state = serial_manager->receive_data.state;
     uint8_t enemy_color = serial_manager->receive_data.enemy_color;
     ArmorFinder* armor_finder = new ArmorFinder(enemy_color);
 
@@ -30,10 +29,13 @@ int main(){
         // wrapper = new VideoWrapper();
 
         bool change_mode = true; // mode changed?
-        const int armor_mode = 1;
-        const int energy_mode = 2;
+        // 模式切换需要更新相机分辨率，等配置信息
+
+        const uint8_t armor_mode = 0;
+        const uint8_t energy_mode = 1;
 
         do{
+            uint8_t state = serial_manager->receive_data.state;
             wrapper->read(src);
             switch(state){
                 case armor_mode : 
@@ -50,6 +52,11 @@ int main(){
 
         
     }
+
+    delete serial_manager;
+    delete wrapper;
+
+    return 0;
 
     // float i = 0;
     // Point2f test;
