@@ -1,5 +1,5 @@
-#ifndef __WRAPPER_H_
-#define __WRAPPER_H_
+#ifndef _WRAPPER_H_
+#define _WRAPPER_H_
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc_c.h>

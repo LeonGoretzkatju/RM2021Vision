@@ -1,6 +1,7 @@
 #include "Other/Serial/Include/SerialManager.h"
 #include "Other/Camera/Include/CameraWrapper.h"
-#include "Armor/Include/ArmorFinder.h"
+#include "Other/Camera/Include/VideoWrapper.h"
+// #include "Armor/Include/ArmorFinder.h"
 #include <iostream>
 #include <thread>
 #include <unistd.h>
@@ -13,18 +14,19 @@ SerialManager* serial_manager = nullptr;
 Wrapper* wrapper = nullptr;
 
 int main(){
-    serial_manager = new SerialManager();
-    Serial* serial = serial_manager->m_serial;
-    thread receive(uart_receive, serial);
+    // serial_manager = new SerialManager();
+    // Serial* serial = serial_manager->m_serial;
+    // thread receive(uart_receive, serial);
 
-    uint8_t enemy_color = serial_manager->receive_data.enemy_color;
-    ArmorFinder* armor_finder = new ArmorFinder(enemy_color);
-
+    // uint8_t enemy_color = serial_manager->receive_data.enemy_color;
+    // ArmorFinder* armor_finder = new ArmorFinder(enemy_color);
+    cv::Mat src;
+    // if from camera
+    // wrapper = new CameraWrapper(5, 100, 2);
+    wrapper = new VideoWrapper("../test.mp4");
+    wrapper->init();
     while (true) {
-        cv::Mat src;
-        // if from camera
-        wrapper = new CameraWrapper(5, 100, 2);
-        wrapper->init();
+        
         // else if from video
         // wrapper = new VideoWrapper();
 
@@ -34,26 +36,26 @@ int main(){
         const uint8_t armor_mode = 0;
         const uint8_t energy_mode = 1;
 
-        do{
-            uint8_t state = serial_manager->receive_data.state;
-            wrapper->read(src);
-            switch(state){
-                case armor_mode : 
-                    armor_finder->run(src);
-                break;
-                case energy_mode : 
-                    // energy->run(src);
-                break;
-            }
-            cv::imshow("test camera wrapper.", src);
-            cv::waitKey(1);
-        }while(change_mode);
-        
+        // do{
+            // uint8_t state = serial_manager->receive_data.state;
+            // wrapper->read(src);
+            // switch(state){
+            //     case armor_mode : 
+            //         armor_finder->run(src);
+            //     break;
+            //     case energy_mode : 
+            //         // energy->run(src);
+            //     break;
+            // }
+        wrapper->read(src);
+        cv::imshow("test camera wrapper.", src);
+        cv::waitKey(1);
+        // }while(change_mode);
 
         
     }
 
-    delete serial_manager;
+    // delete serial_manager;
     delete wrapper;
 
     return 0;
