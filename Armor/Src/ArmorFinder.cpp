@@ -38,7 +38,6 @@ void ArmorFinder::run(cv::Mat &src) {
         last_box = target_box;
     }
 
-    // DEBUG MODE
     // if (show_armor_box) {                 // 根据条件显示当前目标装甲板
     //     showArmorBox("box", src, target_box);
     //     cv::waitKey(1);

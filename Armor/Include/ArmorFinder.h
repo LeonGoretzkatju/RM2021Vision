@@ -17,9 +17,10 @@
 
 extern SerialManager* serial_manager;
 
+typedef std::vector<Armor> Armors;
+
 class ArmorFinder{
 private:
-    typedef std::vector<Armor> Armors;
     Armors armors;
     typedef cv::TrackerMIL TrackerToUse;                // Tracker类型定义
 

@@ -23,14 +23,14 @@ int main(){
     cv::Mat src;
     // if from camera
     // wrapper = new CameraWrapper(5, 100, 2);
-    wrapper = new VideoWrapper("../test.mp4");
+    wrapper = new VideoWrapper("../../test001.avi");
     wrapper->init();
     while (true) {
         
         // else if from video
         // wrapper = new VideoWrapper();
 
-        bool change_mode = true; // mode changed?
+        bool change_mode = true;
         // 模式切换需要更新相机分辨率，等配置信息
 
         const uint8_t armor_mode = 0;
@@ -51,7 +51,6 @@ int main(){
         cv::imshow("test camera wrapper.", src);
         cv::waitKey(1);
         // }while(change_mode);
-
         
     }
 
