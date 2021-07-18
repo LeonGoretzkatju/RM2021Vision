@@ -1,7 +1,7 @@
 #include "../Include/ArmorFinder.h"
 #include <iostream>
 
-bool ArmorFinder::stateSearchingTarget(cv::Mat &src) {
+bool ArmorFinder::stateSearchingTarget(const cv::Mat &src) {
     if (findArmors(src, target_box)) { // 在原图中寻找目标，并返回是否找到
         if (last_box.armor_rect != cv::Rect2d() &&
             (getPointLength(last_box.getCenter() - target_box.getCenter()) > last_box.armor_rect.height * 2.0) &&

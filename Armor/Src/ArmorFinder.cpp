@@ -4,7 +4,7 @@
 
 using namespace std;
 
-ArmorFinder::ArmorFinder(uint8_t &color) :
+ArmorFinder::ArmorFinder(const uint8_t &color) :
         enemy_color(color),
         state(SEARCHING_STATE),
         tracking_cnt(0) {

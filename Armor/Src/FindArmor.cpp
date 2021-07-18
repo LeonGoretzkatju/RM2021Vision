@@ -1,5 +1,7 @@
 #include "../Include/ArmorFinder.h"
 #include "../../Tools/Include/Utils.h"
+#include "../../Tools/Include/Options.h"
+#include "../Include/ShowImage/ShowImages.h"
 #include <opencv2/highgui.hpp>
 #include <Eigen/Dense>
 
@@ -113,19 +115,19 @@ bool ArmorFinder::findArmors(const cv::Mat &src, Armor &box) {
         return false;
     }
 
-    // if (show_light_blobs && state==SEARCHING_STATE) {
-    //     showLightBlobs("light_blobs", src, light_blobs);
-    //     cv::waitKey(1);
-    // }
+    if (show_light_blobs && state==SEARCHING_STATE) {
+        showLightBlobs("light_blobs", src, light_blobs);
+        cv::waitKey(1);
+    }
 // 对灯条进行匹配得出装甲板候选区
     if (!matchArmors(src, light_blobs, armor_boxes)) {
         return false;
     }
 
-    // if (show_armor_boxes && state==SEARCHING_STATE) {
-    //     showArmorBoxes("boxes", src, armor_boxes);
-    //     cv::waitKey(1);
-    // }
+    if (show_armor_box && state==SEARCHING_STATE) {
+        showArmorBoxes("boxes", src, armor_boxes);
+        cv::waitKey(1);
+    }
 
 // 如果分类器可用，则使用分类器对装甲板候选区进行筛选
     // if (classifier) {

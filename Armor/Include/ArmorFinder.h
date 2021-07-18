@@ -41,10 +41,10 @@ private:
     bool findArmors(const cv::Mat& src, Armor& box);
     bool matchArmors(const cv::Mat& src, const Lights& lights, Armors& armors);
 
-    bool stateSearchingTarget(cv::Mat& src);            // searching state主函数
+    bool stateSearchingTarget(const cv::Mat& src);            // searching state主函数
     bool stateTrackingTarget(cv::Mat& src);             // tracking state主函数
 public:
-    ArmorFinder(uint8_t& color);
+    ArmorFinder(const uint8_t& color);
     ~ArmorFinder() = default;
     void run(cv::Mat& src);
 
