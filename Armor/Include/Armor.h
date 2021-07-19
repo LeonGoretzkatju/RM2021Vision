@@ -21,7 +21,10 @@ public:
     cv::Point2f getCenter() const; // 获取装甲板中心
     double getBlobsDistance() const; // 获取两个灯条中心间距
     double lengthDistanceRatio() const; // 获取灯条中心距和灯条长度的比值
-    double getBoxDistance() const; // 获取装甲板到摄像头的距离
+    // double getBoxDistance() const; // 获取装甲板到摄像头的距离
+
+    double get_real_heigt() const; // 根据id获取真实高度 单位mm
+    double get_real_width() const; // 根据id获取真实宽度 单位mm
 
     bool operator<(const Armor &box) const; // 装甲板优先级比较
 };
