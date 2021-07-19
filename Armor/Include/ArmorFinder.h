@@ -22,7 +22,7 @@ typedef std::vector<Armor> Armors;
 class ArmorFinder{
 private:
     Armors armors;
-    typedef cv::TrackerMIL TrackerToUse;                // Tracker类型定义
+    // typedef cv::TrackerMIL TrackerToUse;                // Tracker类型定义
 
     typedef enum{
         SEARCHING_STATE, TRACKING_STATE
@@ -33,7 +33,7 @@ private:
     State state;                                        // 自瞄状态对象实例
     Armor target_box, last_box;                         // 目标装甲板
     int anti_switch_cnt;                                // 防止乱切目标计数器
-    cv::Ptr<cv::Tracker> tracker;                       // tracker对象实例
+    // cv::Ptr<cv::Tracker> tracker;                       // tracker对象实例
     // Classifier classifier;                              // CNN分类器对象实例，用于数字识别
     int tracking_cnt;                                   // 记录追踪帧数，用于定时退出追踪
 

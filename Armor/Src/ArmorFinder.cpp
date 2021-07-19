@@ -18,18 +18,18 @@ void ArmorFinder::run(cv::Mat &src) {
         case SEARCHING_STATE:
             if (stateSearchingTarget(src)) {
                 if ((target_box.armor_rect & cv::Rect2d(0, 0, 640, 480)) == target_box.armor_rect) { // 判断装甲板区域是否脱离图像区域
-                    tracker = TrackerToUse::create();                       // 成功搜寻到装甲板，创建tracker对象
-                    tracker->init(src, target_box.armor_rect);
+                    // tracker = TrackerToUse::create();                       // 成功搜寻到装甲板，创建tracker对象
+                    // tracker->init(src, target_box.armor_rect);
                     state = TRACKING_STATE;
                     tracking_cnt = 0;
-                    cout << "into track" << endl;
+                    // cout << "into track" << endl;
                 }
             }
             break;
         case TRACKING_STATE:
             if (!stateTrackingTarget(src) || ++tracking_cnt > 100) {    // 最多追踪100帧图像
                 state = SEARCHING_STATE;
-                cout << "into searching" << endl;
+                // cout << "into searching" << endl;
             }
             break;
     }

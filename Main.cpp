@@ -48,7 +48,6 @@ int main(){
                     // energy->run(src);
                 break;
             }
-            wrapper->read(src);
         }while(change_mode);
         
     }

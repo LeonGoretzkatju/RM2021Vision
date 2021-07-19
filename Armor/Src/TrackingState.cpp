@@ -1,14 +1,14 @@
 #include "../Include/ArmorFinder.h"
-
+#include <iostream>
 
 bool ArmorFinder::stateTrackingTarget(cv::Mat &src) {
-    cv::Rect pos = target_box.armor_rect;
-    if(!tracker->update(src, pos)){
-        target_box = Armor();
-        // LOGW("Track fail!");
-        return false;
-    }
-    if((pos & cv::Rect(0, 0, 640, 480)) != pos){
+    cv::Rect2d pos = target_box.armor_rect;
+    // if(!tracker->update(src, pos)){
+    //     target_box = Armor();
+    //     // LOGW("Track fail!");
+    //     return false;
+    // }
+    if((pos & cv::Rect2d(0, 0, 640, 480)) != pos){
         target_box = Armor();
         // LOGW("Track out range!");
         return false;
@@ -33,8 +33,9 @@ bool ArmorFinder::stateTrackingTarget(cv::Mat &src) {
             blob.light_rect.center.x += bigger_rect.x;
             blob.light_rect.center.y += bigger_rect.y;
         }
-        tracker = TrackerToUse::create();
-        tracker->init(src, target_box.armor_rect);
+        std::cout << target_box.getCenter().x << " " << target_box.getCenter().y << std::endl;
+        // tracker = TrackerToUse::create();
+        // tracker->init(src, target_box.armor_rect);
     }else{    // 如果没有成功搜索目标，则使用判断是否跟丢。
         // roi = src(pos).clone();
         // if(classifier){ // 分类器可用，使用分类器判断。
