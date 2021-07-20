@@ -124,7 +124,7 @@ bool ArmorFinder::findArmors(const cv::Mat &src, Armor &box) {
         return false;
     }
 
-    if (show_armor_box && state==SEARCHING_STATE) {
+    if (show_armor_box) {
         showArmorBoxes("boxes", src, armor_boxes);
         cv::waitKey(1);
     }

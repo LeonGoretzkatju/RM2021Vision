@@ -19,11 +19,11 @@ int main(){
     // thread receive(uart_receive, serial);
 
     // uint8_t enemy_color = serial_manager->receive_data.enemy_color;
-    ArmorFinder* armor_finder = new ArmorFinder(ENEMY_BLUE);
+    ArmorFinder* armor_finder = new ArmorFinder(ENEMY_RED);
     cv::Mat src;
     // if from camera
-    // wrapper = new CameraWrapper(5, 100, 2);
-    wrapper = new VideoWrapper("../../test001.avi");
+    wrapper = new CameraWrapper(5, 100, 2);
+    // wrapper = new VideoWrapper("../../test001.avi");
     wrapper->init();
     while (true) {
         
@@ -40,6 +40,8 @@ int main(){
             uint8_t state = armor_mode;
             // uint8_t state = serial_manager->receive_data.state;
             wrapper->read(src);
+            imshow("show figure", src);
+            waitKey(1);
             switch(state){
                 case armor_mode :
                     armor_finder->run(src);

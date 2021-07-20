@@ -32,20 +32,14 @@ double Armor::lengthDistanceRatio() const {
     }
 }
 
-// to do
-
-// 计算装甲板到摄像头的距离
-// double Armor::getBoxDistance() const {
-//     return 0;
-// }
 double Armor::get_real_heigt() const {
-    // TODO:
-    return 0;
+    // TODO: add other armors' height.
+    return 125;
 }
 
 double Armor::get_real_width() const {
     // TODO:
-    return 0;
+    return 135;
 }
 
 // 装甲板的优先级比较

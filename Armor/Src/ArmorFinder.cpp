@@ -2,6 +2,7 @@
 #include "../../Tools/Include/systime.h"
 #include <opencv2/core.hpp>
 #include <iostream>
+#include <opencv2/calib3d.hpp>
 
 using namespace std;
 
@@ -17,6 +18,7 @@ void ArmorFinder::run(cv::Mat &src) {
 //    goto end;
     switch (state) {
         case SEARCHING_STATE:
+            // cout << "searching state" << endl;
             if (stateSearchingTarget(src)) {
                 if ((target_box.armor_rect & cv::Rect2d(0, 0, 640, 480)) == target_box.armor_rect) { // 判断装甲板区域是否脱离图像区域
                     // tracker = TrackerToUse::create();                       // 成功搜寻到装甲板，创建tracker对象
@@ -30,6 +32,7 @@ void ArmorFinder::run(cv::Mat &src) {
             }
             break;
         case TRACKING_STATE:
+            // cout << "tracking state" << endl;
             if (!stateTrackingTarget(src) || ++tracking_cnt > 100) {    // 最多追踪100帧图像
                 state = SEARCHING_STATE;
                 // cout << "into searching" << endl;
@@ -60,13 +63,27 @@ void ArmorFinder::run(cv::Mat &src) {
                 img_pnts.emplace_back(Point2f(box.x, box.y + box.height));
 
                 // 相机内参矩阵 + 畸变矩阵
-                Mat inner_matrix = (Mat_<double>(3, 3) << 598.29493, 0, 304.76898, 0, 597.56086, 233.34673, 0, 0, 1);
-                Mat distortion_matrix = (Mat_<double>(5, 1) << -0.53572,1.35993,-0.00244,0.00620,0.00000);
+                // fx, 0, cx
+                // 0, fy, cy
+                // 0, 0, 1
+                Mat inner_matrix = (Mat_<double>(3, 3) << 933.94931947048565, 0, 320.0,
+                                                          0, 933.94931947048565, 240.0,
+                                                          0, 0, 1);
+                Mat distortion_matrix = (Mat_<double>(5, 1) << 0.0528381602513808, -1.9140458072801805, 0.0, 0.0, 9.1338656641243716);
 
                 // solve pnp
-                Mat raux, taux;
-                Mat Rvec, Tvec;
-                
+                Mat rvecs = cv::Mat::zeros(3, 1, CV_64FC1);
+                Mat tvecs = cv::Mat::zeros(3, 1, CV_64FC1);
+                // cv::Mat Rod_r ,TransMatrix ,RotationR;
+                bool success = cv::solvePnP(
+                    obj_pnts, img_pnts, inner_matrix, distortion_matrix, rvecs, tvecs
+                );
+                // Rodrigues(Rod_r, RotationR);
+                // cout << "C(Camera center:):" << endl << -RotationR.inv()*TransMatrix << endl;//这个C果然是相机中心，十分准确
+                cout << tvecs.ptr<double>(0)[0] << " "
+                     << tvecs.ptr<double>(0)[1] << " "
+                     << tvecs.ptr<double>(0)[2] << " "
+                     << endl;
             }
             break;
     }
