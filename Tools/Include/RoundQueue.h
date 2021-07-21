@@ -53,6 +53,10 @@ public:
         // std::cout << "Pop funtion unlock..." << std::endl;
         return true;
     };
+
+    bool clear(){
+        this->head = this->tail;
+    }
 };
 
 #endif
