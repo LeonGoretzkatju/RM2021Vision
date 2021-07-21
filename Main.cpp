@@ -2,6 +2,7 @@
 #include "Other/Camera/Include/CameraWrapper.h"
 #include "Other/Camera/Include/VideoWrapper.h"
 #include "Armor/Include/ArmorFinder.h"
+#include "Predictor/Include/Predictor.h"
 #include <iostream>
 #include <thread>
 #include <unistd.h>
@@ -12,6 +13,7 @@ using namespace std;
 
 SerialManager* serial_manager = nullptr;
 Wrapper* wrapper = nullptr;
+Predictor* predictor = nullptr;
 
 int main(){
     // serial_manager = new SerialManager();
@@ -19,7 +21,8 @@ int main(){
     // thread receive(uart_receive, serial);
 
     // uint8_t enemy_color = serial_manager->receive_data.enemy_color;
-    ArmorFinder* armor_finder = new ArmorFinder(ENEMY_RED);
+    predictor = new Predictor();
+    ArmorFinder* armor_finder = new ArmorFinder(ENEMY_RED, serial_manager, predictor);
     cv::Mat src;
     // if from camera
     wrapper = new CameraWrapper(5, 100, 2);
@@ -39,12 +42,18 @@ int main(){
         do{
             uint8_t state = armor_mode;
             // uint8_t state = serial_manager->receive_data.state;
+            cout << "ckpt1: start reading image" << endl;
             wrapper->read(src);
+            cout << "ckpt2: finish reading image" << endl;
             imshow("show figure", src);
             waitKey(1);
+            cout << "ckpt3: finish showing image" << endl;
             switch(state){
                 case armor_mode :
+                    cout << "ckpt4: start running on this image." << endl;
                     armor_finder->run(src);
+                    cout << "ckpt5: finish running on this image" << endl;
+                    cout << endl;
                 break;
                 case energy_mode : 
                     // energy->run(src);

@@ -123,7 +123,7 @@ bool CameraWrapper::init() {
         CameraSetCallbackFunction(h_camera, cameraCallback, this, nullptr);
     }
     init_done = true;
-    CameraSaveParameterToFile(h_camera, "./test.config");
+    CameraSaveParameterToFile(h_camera, "../camera_mv.Config");
     return true;
 }
 

@@ -5,6 +5,7 @@
 #include "../../Tools/Include/systime.h"
 #include "../../Tools/Include/constants.h"
 #include "../../Other/Serial/Include/SerialManager.h"
+#include "Predictor.h"
 #include "../../Tools/Include/Utils.h" 
 #include <opencv2/core/core.hpp>
 #include <opencv2/video/tracking.hpp>
@@ -15,7 +16,6 @@
 #define BOX_RED     ENEMY_RED
 #define BOX_BLUE    ENEMY_BLUE
 
-extern SerialManager* serial_manager;
 
 typedef std::vector<Armor> Armors;
 
@@ -37,6 +37,9 @@ private:
     // Classifier classifier;                              // CNN分类器对象实例，用于数字识别
     int tracking_cnt;                                   // 记录追踪帧数，用于定时退出追踪
 
+    SerialManager* serial_manager; // 与串口交互
+    Predictor* predictor; // 与预测器交互
+
     bool findLights(const cv::Mat& src, Lights& lights);
     bool findArmors(const cv::Mat& src, Armor& box);
     bool matchArmors(const cv::Mat& src, const Lights& lights, Armors& armors);
@@ -44,7 +47,7 @@ private:
     bool stateSearchingTarget(const cv::Mat& src);            // searching state主函数
     bool stateTrackingTarget(cv::Mat& src);             // tracking state主函数
 public:
-    ArmorFinder(const uint8_t& color);
+    ArmorFinder(const uint8_t& color, SerialManager* serial_manager, Predictor* predictor);
     ~ArmorFinder() = default;
     void run(cv::Mat& src);
 
