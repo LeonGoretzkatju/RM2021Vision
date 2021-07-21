@@ -14,6 +14,7 @@ public:
     systime time;
     double yaw, pitch;
     cv::Point3f world_position;
+    Trace() {}
     Trace(Armor armor, systime time, double yaw, double pitch){
         this->armor = armor;
         this->time = time;
@@ -28,7 +29,7 @@ private:
 public:
     Filter* filter;
 
-    Predictor();
+    Predictor() {}
     ~Predictor();
 
     cv::Point3f solve_pnp(Trace& trace);
@@ -40,6 +41,7 @@ public:
             std::cout << "wrong" << std::endl;
         }
         this->armor_traces.push(target);
+        return true;
     }
 
     bool clear(){

@@ -10,6 +10,8 @@ SET(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
 FIND_PACKAGE(OpenCV REQUIRED)
 FIND_PACKAGE(Threads)
 
+FIND_PACKAGE(Eigen3)
+
 
 # LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/Others)
 
@@ -20,6 +22,7 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Predictor/Include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Tools/Include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Other/Serial/Include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Other/Camera/Include)
+
 
 FILE(GLOB_RECURSE sourcefiles "Other/Serial/Src/*.cpp" "Other/Camera/Src/*.cpp" "Tools/Src/*.cpp" "Armor/Src/*.cpp" "Predictor/Src/*.cpp")
 ADD_EXECUTABLE(TJU-RM-2021 Main.cpp ${sourcefiles})

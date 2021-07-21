@@ -20,7 +20,7 @@ void ArmorFinder::run(cv::Mat &src) {
 //    goto end;
     switch (state) {
         case SEARCHING_STATE:
-            // cout << "searching state" << endl;
+            cout << "searching state" << endl;
             if (stateSearchingTarget(src)) {
                 if ((target_box.armor_rect & cv::Rect2d(0, 0, 640, 480)) == target_box.armor_rect) { // 判断装甲板区域是否脱离图像区域
                     // tracker = TrackerToUse::create();                       // 成功搜寻到装甲板，创建tracker对象
@@ -34,9 +34,10 @@ void ArmorFinder::run(cv::Mat &src) {
             }
             break;
         case TRACKING_STATE:
-            // cout << "tracking state" << endl;
+            cout << "tracking state" << endl;
             if (!stateTrackingTarget(src) || ++tracking_cnt > 100) {    // 最多追踪100帧图像
                 state = SEARCHING_STATE;
+                cout << "if" << endl;
                 // cout << "into searching" << endl;
             } else {
                 // 获取target box的四个点坐标
@@ -88,8 +89,11 @@ void ArmorFinder::run(cv::Mat &src) {
                 //      << endl;
 
                 // 从串口处获取yaw pitch
-                double yaw = this->serial_manager->receive_data.curr_yaw;
-                double pitch = this->serial_manager->receive_data.curr_pitch;
+                // double yaw = this->serial_manager->receive_data.curr_yaw;
+                // double pitch = this->serial_manager->receive_data.curr_pitch;
+                double yaw = 15 / 180 * 3.1415926;
+                double pitch =  0 / 180 * 3.1415926;
+
 
                 // copy armor
                 Armor target = this->target_box;
@@ -98,6 +102,8 @@ void ArmorFinder::run(cv::Mat &src) {
                 systime t;
 
                 // push
+                // TODO: 处理角度
+                cout << "push success" << endl;
                 predictor->push_back(
                     Trace(target, t, yaw, pitch)
                 );

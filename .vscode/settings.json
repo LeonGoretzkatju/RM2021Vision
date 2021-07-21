@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.py": "python",
         "thread": "cpp",
         "iostream": "cpp",
         "array": "cpp",
@@ -53,6 +54,7 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeindex": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "dense": "cpp"
     }
 }
