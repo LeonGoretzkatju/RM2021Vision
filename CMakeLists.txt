@@ -16,11 +16,12 @@ FIND_PACKAGE(Threads)
 INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Armor/Include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Predictor/Include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Tools/Include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Other/Serial/Include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Other/Camera/Include)
 
-FILE(GLOB_RECURSE sourcefiles "Other/Serial/Src/*.cpp" "Other/Camera/Src/*.cpp" "Tools/Src/*.cpp" "Armor/Src/*.cpp")
+FILE(GLOB_RECURSE sourcefiles "Other/Serial/Src/*.cpp" "Other/Camera/Src/*.cpp" "Tools/Src/*.cpp" "Armor/Src/*.cpp" "Predictor/Src/*.cpp")
 ADD_EXECUTABLE(TJU-RM-2021 Main.cpp ${sourcefiles})
 
 TARGET_LINK_LIBRARIES(TJU-RM-2021 ${CMAKE_THREAD_LIBS_INIT})
