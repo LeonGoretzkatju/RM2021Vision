@@ -6,20 +6,19 @@ using namespace Eigen;
 
 bool Predictor::coordinate_trans(Trace& trace){
     Point3f camera_pos = solve_pnp(trace);
-    std::cout << "                                         " <<  camera_pos << std::endl;
     Matrix<double, 3, 1> camera_coo;
     Matrix<double, 3, 1> world_pos;
-    Matrix3d r, r_x, r_y;
+    Matrix3d r_inverse, r_x, r_y;
 
     camera_coo << camera_pos.x, camera_pos.y, camera_pos.z;
     r_x << 1, 0, 0,
-           0, cos(trace.pitch), -sin(trace.pitch),
-           0, sin(trace.pitch), cos(trace.pitch);
-    r_y << cos(trace.yaw), 0, -sin(trace.yaw),
+           0, cos(trace.pitch), sin(trace.pitch),
+           0, -sin(trace.pitch), cos(trace.pitch);
+    r_y << cos(-trace.yaw), 0, -sin(-trace.yaw),
            0, 1, 0,
-           sin(trace.yaw), 0, cos(trace.yaw);
-    r = (r_y * r_x).transpose();
-    world_pos = r * camera_coo;
+           sin(-trace.yaw), 0, cos(-trace.yaw);
+    r_inverse = (r_x * r_y).transpose();
+    world_pos = r_inverse * camera_coo;
 
     trace.world_position = Point3f(world_pos[0], world_pos[1], world_pos[2]);
     std::cout << "                                                          " << trace.world_position << std::endl;
