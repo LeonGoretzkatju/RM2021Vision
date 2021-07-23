@@ -11,6 +11,7 @@ bool Predictor::coordinate_trans(Trace& trace){
     Matrix3d r_inverse, r_x, r_y;
 
     camera_coo << camera_pos.x, camera_pos.y, camera_pos.z;
+    // cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << "camera coordinate " << camera_coo;
     r_x << 1, 0, 0,
            0, cos(trace.pitch), sin(trace.pitch),
            0, -sin(trace.pitch), cos(trace.pitch);
@@ -18,10 +19,15 @@ bool Predictor::coordinate_trans(Trace& trace){
            0, 1, 0,
            sin(-trace.yaw), 0, cos(-trace.yaw);
     r_inverse = (r_x * r_y).transpose();
+
+    camera_coo[0] += 120;
+    camera_coo[1] += 20;
+    camera_coo[2] += 60;
+
     world_pos = r_inverse * camera_coo;
 
-    trace.world_position = Point3f(world_pos[0], world_pos[1], world_pos[2]);
-    std::cout << "                                                          " << trace.world_position << std::endl;
+    trace.world_position = Point3f(world_pos[0], world_pos[1], -2300.0);
+    std::cout << "                                " << trace.world_position << std::endl;
     return true;
 }
 

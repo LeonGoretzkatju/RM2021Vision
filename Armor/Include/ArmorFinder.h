@@ -23,7 +23,6 @@ class ArmorFinder{
 private:
     Armors armors;
     // typedef cv::TrackerMIL TrackerToUse;                // Tracker类型定义
-
     typedef enum{
         SEARCHING_STATE, TRACKING_STATE
     } State;                                            // 自瞄状态枚举定义

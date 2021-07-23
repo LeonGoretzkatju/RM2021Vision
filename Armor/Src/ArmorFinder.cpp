@@ -89,11 +89,10 @@ void ArmorFinder::run(cv::Mat &src) {
                 //      << endl;
 
                 // 从串口处获取yaw pitch
-                // double yaw = this->serial_manager->receive_data.curr_yaw;
-                // double pitch = this->serial_manager->receive_data.curr_pitch;
-                double yaw = 15 / 180 * 3.1415926;
-                double pitch =  0 / 180 * 3.1415926;
-
+                double yaw = this->serial_manager->receive_data.curr_yaw;
+                double pitch = this->serial_manager->receive_data.curr_pitch;
+                cout << "current yaw " << yaw << endl
+                     << "current pitch " << pitch << endl;
 
                 // copy armor
                 Armor target = this->target_box;
@@ -103,6 +102,7 @@ void ArmorFinder::run(cv::Mat &src) {
 
                 // push
                 // TODO: 处理角度
+//                drawCurve.InsertData();
                 cout << "push success" << endl;
                 predictor->push_back(
                     Trace(target, t, yaw, pitch)

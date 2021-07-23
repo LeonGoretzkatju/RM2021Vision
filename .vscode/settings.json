@@ -55,6 +55,14 @@
         "streambuf": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "dense": "cpp"
+        "dense": "cpp",
+        "*.txx": "cpp",
+        "csignal": "cpp",
+        "strstream": "cpp",
+        "bitset": "cpp",
+        "unordered_set": "cpp",
+        "numeric": "cpp",
+        "cfenv": "cpp",
+        "cinttypes": "cpp"
     }
 }

@@ -13,7 +13,7 @@ struct ReceiveData{
     float curr_yaw;      // 当前云台yaw角度
     float curr_pitch;    // 当前云台pitch角
     uint8_t state;       // 当前状态，自瞄-大符-小符
-    // uint8_t mark;        // 云台角度标记位
+    // // uint8_t mark;        // 云台角度标记位
     uint8_t enemy_color; // 敌方颜色
 };
 

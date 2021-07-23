@@ -5,8 +5,13 @@
 #include "../../Tools/Include/RoundQueue.h"
 #include "../../Tools/Include/systime.h"
 #include "../../Armor/Include/Armor.h"
+#include "../../Tools/Include/Draw_Curve.h"
 #include "Filter.h"
 #include <opencv2/core/core.hpp>
+#include "SerialManager.h"
+#include "Utils.h"
+
+extern SerialManager* serial_manager;
 
 class Trace{
 public:
@@ -28,7 +33,7 @@ private:
     RoundQueue<Trace, 5> armor_traces;
 public:
     Filter* filter;
-
+    DrawCurve* drawCurve;
     Predictor() {}
     ~Predictor();
 
@@ -41,6 +46,20 @@ public:
             std::cout << "wrong" << std::endl;
         }
         this->armor_traces.push(target);
+        double x = target.world_position.x;
+        double y = target.world_position.y;
+        double z = target.world_position.z;
+        double yaw = get_yaw(x, z);
+        double pitch = get_pitch(x, y, z);
+
+        serial_manager->uart_send(cv::Point2f(yaw, pitch), false);
+        
+        std::cout << "=============================================" << endl;
+        std::cout << "receive yaw: " << target.yaw << std::endl;
+        std::cout << "receive pitch: " << target.pitch << std::endl;
+        std::cout << "delta yaw: " << abs(target.yaw - yaw) << endl;
+        std::cout << "=============================================" << endl;
+        drawCurve->InsertData(yaw,target.yaw,"after transform","origin yaw");
         return true;
     }
 

@@ -25,7 +25,7 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Other/Camera/Include)
 
 
 FILE(GLOB_RECURSE sourcefiles "Other/Serial/Src/*.cpp" "Other/Camera/Src/*.cpp" "Tools/Src/*.cpp" "Armor/Src/*.cpp" "Predictor/Src/*.cpp")
-ADD_EXECUTABLE(TJU-RM-2021 Main.cpp ${sourcefiles})
+ADD_EXECUTABLE(TJU-RM-2021 Main.cpp ${sourcefiles} Tools/Include/Draw_Curve.h Tools/Src/Draw_Curve.cpp)
 
 TARGET_LINK_LIBRARIES(TJU-RM-2021 ${CMAKE_THREAD_LIBS_INIT})
 TARGET_LINK_LIBRARIES(TJU-RM-2021 ${OpenCV_LIBS})

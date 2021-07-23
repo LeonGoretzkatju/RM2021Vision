@@ -16,13 +16,13 @@ Wrapper* wrapper = nullptr;
 Predictor* predictor = nullptr;
 
 int main(){
-    // serial_manager = new SerialManager();
-    // Serial* serial = serial_manager->m_serial;
-    // thread receive(uart_receive, serial);
+    serial_manager = new SerialManager();
+    Serial* serial = serial_manager->m_serial;
+    thread receive(uart_receive, serial);
 
     // uint8_t enemy_color = serial_manager->receive_data.enemy_color;
     predictor = new Predictor();
-    ArmorFinder* armor_finder = new ArmorFinder(ENEMY_RED, serial_manager, predictor);
+    ArmorFinder* armor_finder = new ArmorFinder(ENEMY_BLUE, serial_manager, predictor);
     cv::Mat src;
     // if from camera
     wrapper = new CameraWrapper(5, 100, 2);
@@ -40,6 +40,13 @@ int main(){
         const uint8_t energy_mode = 1;
 
         do{
+            systime st;
+            getsystime(st);
+            cout << serial_manager->receive_data.curr_yaw << endl
+                      << serial_manager->receive_data.curr_pitch << endl
+                      << serial_manager->receive_data.shoot_speed << endl
+                      << (char)serial_manager->receive_data.state << endl
+                      << (char)serial_manager->receive_data.enemy_color << endl;
             uint8_t state = armor_mode;
             // uint8_t state = serial_manager->receive_data.state;
             cout << "ckpt1: start reading image" << endl;
@@ -59,6 +66,9 @@ int main(){
                     // energy->run(src);
                 break;
             }
+            systime ed;
+            getsystime(ed);
+            cout << " fps: " << 1 / (getTimeIntervalms(ed, st) / 1000);
         }while(change_mode);
         
     }
