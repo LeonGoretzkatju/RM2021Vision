@@ -8,7 +8,7 @@ bool Predictor::coordinate_trans(Trace& trace){
     Point3f camera_pos = solve_pnp(trace);
     Matrix<double, 3, 1> camera_coo;
     Matrix<double, 3, 1> world_pos;
-    Matrix3d r_inverse, r_x, r_y;
+    Matrix3d r_inverse, r_x, r_y, r_yaw, r_pitch;
 
     camera_coo << camera_pos.x, camera_pos.y, camera_pos.z;
     // cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << "camera coordinate " << camera_coo;
@@ -18,15 +18,21 @@ bool Predictor::coordinate_trans(Trace& trace){
     r_y << cos(-trace.yaw), 0, -sin(-trace.yaw),
            0, 1, 0,
            sin(-trace.yaw), 0, cos(-trace.yaw);
-    r_inverse = (r_x * r_y).transpose();
+    r_pitch << 1, 0, 0,
+               0, cos(trace.pitch), sin(trace.pitch),
+               0,-sin(trace.pitch), cos(trace.pitch);
+    r_yaw << cos(trace.yaw), 0, sin(trace.yaw),
+             0, 1, 0,
+             -sin(trace.yaw), 0, cos(trace.yaw);
+    r_inverse = (r_pitch * r_yaw).transpose();
 
-    camera_coo[0] += 120;
-    camera_coo[1] += 20;
-    camera_coo[2] += 60;
+    camera_coo[0] += 20;
+    camera_coo[1] += 0;
+    camera_coo[2] += 50;
 
     world_pos = r_inverse * camera_coo;
 
-    trace.world_position = Point3f(world_pos[0], world_pos[1], -2300.0);
+    trace.world_position = Point3f(world_pos[0], world_pos[1], world_pos[2]);
     std::cout << "                                " << trace.world_position << std::endl;
     return true;
 }
@@ -75,7 +81,8 @@ cv::Point3f Predictor::solve_pnp(Trace& trace){
     );
     // Rodrigues(Rod_r, RotationR);
     // cout << "C(Camera center:):" << endl << -RotationR.inv()*TransMatrix << endl;//这个C果然是相机中心，十分准确
-
+    // cout << "shiji distance                                     " << -tvecs.ptr<double>(0)[2] << endl;
+    cout << "camera coordinate pose x " << "                                 "<< tvecs << endl;
     return Point3f(tvecs.ptr<double>(0)[0], tvecs.ptr<double>(0)[1], -tvecs.ptr<double>(0)[2]);
 
 }

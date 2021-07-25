@@ -26,19 +26,21 @@ void uart_receive(Serial *p_serial){
 }
 
 // 传参
-void SerialManager::uart_send(Point2f angle, bool fire){
+void SerialManager::uart_send(Point2f angle, Point2f origin_angle, bool fire){
     char buffer[40];
     send_data.final_pitch = angle.y;
     send_data.final_yaw = angle.x;
+    send_data.origin_yaw = origin_angle.x;
+    send_data.origin_pitch = origin_angle.y;
     double now_yaw = serial_manager->receive_data.curr_yaw;
     double now_pitch = serial_manager->receive_data.curr_pitch;
 
-    if(abs(now_pitch - angle.y) < 0.001){
-        send_data.final_pitch = now_pitch;
-    }
-    if(abs(now_yaw - angle.x) < 0.008){
-        send_data.final_yaw = now_yaw;
-    }
+    // if(abs(now_pitch - angle.y) < 0.001){
+    //     send_data.final_pitch = now_pitch;
+    // }
+    // if(abs(now_yaw - angle.x) < 0.008){
+    //     send_data.final_yaw = now_yaw;
+    // }
 
     std::cout << "send yaw: " << send_data.final_yaw << std::endl;
     std::cout << "send pitch: " << send_data.final_pitch << std::endl;

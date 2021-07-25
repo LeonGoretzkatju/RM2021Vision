@@ -34,12 +34,12 @@ double Armor::lengthDistanceRatio() const {
 
 double Armor::get_real_heigt() const {
     // TODO: add other armors' height.
-    return 125;
+    return 56;
 }
 
 double Armor::get_real_width() const {
     // TODO:
-    return 135;
+    return 232;
 }
 
 // 装甲板的优先级比较

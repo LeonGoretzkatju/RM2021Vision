@@ -466,6 +466,33 @@ Other/Serial/Src/SerialManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/Other/Serial/Src/SerialManager.cpp.s
 .PHONY : Other/Serial/Src/SerialManager.cpp.s
 
+Predictor/Src/KalmanFilter.o: Predictor/Src/KalmanFilter.cpp.o
+
+.PHONY : Predictor/Src/KalmanFilter.o
+
+# target to build an object file
+Predictor/Src/KalmanFilter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.o
+.PHONY : Predictor/Src/KalmanFilter.cpp.o
+
+Predictor/Src/KalmanFilter.i: Predictor/Src/KalmanFilter.cpp.i
+
+.PHONY : Predictor/Src/KalmanFilter.i
+
+# target to preprocess a source file
+Predictor/Src/KalmanFilter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.i
+.PHONY : Predictor/Src/KalmanFilter.cpp.i
+
+Predictor/Src/KalmanFilter.s: Predictor/Src/KalmanFilter.cpp.s
+
+.PHONY : Predictor/Src/KalmanFilter.s
+
+# target to generate assembly for a file
+Predictor/Src/KalmanFilter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.s
+.PHONY : Predictor/Src/KalmanFilter.cpp.s
+
 Predictor/Src/Predictor.o: Predictor/Src/Predictor.cpp.o
 
 .PHONY : Predictor/Src/Predictor.o
@@ -619,6 +646,9 @@ help:
 	@echo "... Other/Serial/Src/SerialManager.o"
 	@echo "... Other/Serial/Src/SerialManager.i"
 	@echo "... Other/Serial/Src/SerialManager.s"
+	@echo "... Predictor/Src/KalmanFilter.o"
+	@echo "... Predictor/Src/KalmanFilter.i"
+	@echo "... Predictor/Src/KalmanFilter.s"
 	@echo "... Predictor/Src/Predictor.o"
 	@echo "... Predictor/Src/Predictor.i"
 	@echo "... Predictor/Src/Predictor.s"

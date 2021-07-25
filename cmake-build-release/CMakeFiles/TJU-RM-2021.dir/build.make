@@ -232,9 +232,22 @@ CMakeFiles/TJU-RM-2021.dir/Other/Serial/Src/SerialManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TJU-RM-2021.dir/Other/Serial/Src/SerialManager.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nuc/tjurm/rm2021/Other/Serial/Src/SerialManager.cpp -o CMakeFiles/TJU-RM-2021.dir/Other/Serial/Src/SerialManager.cpp.s
 
+CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.o: CMakeFiles/TJU-RM-2021.dir/flags.make
+CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.o: ../Predictor/Src/KalmanFilter.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.o -c /home/nuc/tjurm/rm2021/Predictor/Src/KalmanFilter.cpp
+
+CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nuc/tjurm/rm2021/Predictor/Src/KalmanFilter.cpp > CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.i
+
+CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nuc/tjurm/rm2021/Predictor/Src/KalmanFilter.cpp -o CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.s
+
 CMakeFiles/TJU-RM-2021.dir/Predictor/Src/Predictor.cpp.o: CMakeFiles/TJU-RM-2021.dir/flags.make
 CMakeFiles/TJU-RM-2021.dir/Predictor/Src/Predictor.cpp.o: ../Predictor/Src/Predictor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/TJU-RM-2021.dir/Predictor/Src/Predictor.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/TJU-RM-2021.dir/Predictor/Src/Predictor.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TJU-RM-2021.dir/Predictor/Src/Predictor.cpp.o -c /home/nuc/tjurm/rm2021/Predictor/Src/Predictor.cpp
 
 CMakeFiles/TJU-RM-2021.dir/Predictor/Src/Predictor.cpp.i: cmake_force
@@ -247,7 +260,7 @@ CMakeFiles/TJU-RM-2021.dir/Predictor/Src/Predictor.cpp.s: cmake_force
 
 CMakeFiles/TJU-RM-2021.dir/Tools/Src/Draw_Curve.cpp.o: CMakeFiles/TJU-RM-2021.dir/flags.make
 CMakeFiles/TJU-RM-2021.dir/Tools/Src/Draw_Curve.cpp.o: ../Tools/Src/Draw_Curve.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/TJU-RM-2021.dir/Tools/Src/Draw_Curve.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/TJU-RM-2021.dir/Tools/Src/Draw_Curve.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TJU-RM-2021.dir/Tools/Src/Draw_Curve.cpp.o -c /home/nuc/tjurm/rm2021/Tools/Src/Draw_Curve.cpp
 
 CMakeFiles/TJU-RM-2021.dir/Tools/Src/Draw_Curve.cpp.i: cmake_force
@@ -260,7 +273,7 @@ CMakeFiles/TJU-RM-2021.dir/Tools/Src/Draw_Curve.cpp.s: cmake_force
 
 CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o: CMakeFiles/TJU-RM-2021.dir/flags.make
 CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o: ../Tools/Src/Utils.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o -c /home/nuc/tjurm/rm2021/Tools/Src/Utils.cpp
 
 CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.i: cmake_force
@@ -273,7 +286,7 @@ CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.s: cmake_force
 
 CMakeFiles/TJU-RM-2021.dir/Tools/Src/systime.cpp.o: CMakeFiles/TJU-RM-2021.dir/flags.make
 CMakeFiles/TJU-RM-2021.dir/Tools/Src/systime.cpp.o: ../Tools/Src/systime.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/TJU-RM-2021.dir/Tools/Src/systime.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/TJU-RM-2021.dir/Tools/Src/systime.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/TJU-RM-2021.dir/Tools/Src/systime.cpp.o -c /home/nuc/tjurm/rm2021/Tools/Src/systime.cpp
 
 CMakeFiles/TJU-RM-2021.dir/Tools/Src/systime.cpp.i: cmake_force
@@ -298,6 +311,7 @@ TJU__RM__2021_OBJECTS = \
 "CMakeFiles/TJU-RM-2021.dir/Other/Camera/Src/VideoWrapper.cpp.o" \
 "CMakeFiles/TJU-RM-2021.dir/Other/Serial/Src/Serial.cpp.o" \
 "CMakeFiles/TJU-RM-2021.dir/Other/Serial/Src/SerialManager.cpp.o" \
+"CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.o" \
 "CMakeFiles/TJU-RM-2021.dir/Predictor/Src/Predictor.cpp.o" \
 "CMakeFiles/TJU-RM-2021.dir/Tools/Src/Draw_Curve.cpp.o" \
 "CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o" \
@@ -318,6 +332,7 @@ TJU-RM-2021: CMakeFiles/TJU-RM-2021.dir/Other/Camera/Src/CameraWrapper.cpp.o
 TJU-RM-2021: CMakeFiles/TJU-RM-2021.dir/Other/Camera/Src/VideoWrapper.cpp.o
 TJU-RM-2021: CMakeFiles/TJU-RM-2021.dir/Other/Serial/Src/Serial.cpp.o
 TJU-RM-2021: CMakeFiles/TJU-RM-2021.dir/Other/Serial/Src/SerialManager.cpp.o
+TJU-RM-2021: CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.o
 TJU-RM-2021: CMakeFiles/TJU-RM-2021.dir/Predictor/Src/Predictor.cpp.o
 TJU-RM-2021: CMakeFiles/TJU-RM-2021.dir/Tools/Src/Draw_Curve.cpp.o
 TJU-RM-2021: CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o
@@ -341,7 +356,7 @@ TJU-RM-2021: /usr/local/lib/libopencv_world.so.4.5.1
 TJU-RM-2021: /usr/local/lib/libopencv_world.so.4.5.1
 TJU-RM-2021: ../Other/Camera/libMVSDK.so
 TJU-RM-2021: CMakeFiles/TJU-RM-2021.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable TJU-RM-2021"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking CXX executable TJU-RM-2021"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TJU-RM-2021.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

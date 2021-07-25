@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/TJU-RM-2021.dir/Other/Camera/Src/VideoWrapper.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Other/Serial/Src/Serial.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Other/Serial/Src/SerialManager.cpp.o"
+  "CMakeFiles/TJU-RM-2021.dir/Predictor/Src/KalmanFilter.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Predictor/Src/Predictor.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Tools/Src/Draw_Curve.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Tools/Src/Utils.cpp.o"

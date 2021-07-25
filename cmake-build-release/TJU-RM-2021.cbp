@@ -134,6 +134,12 @@
 		<Unit filename="/home/nuc/tjurm/rm2021/Other/Serial/Src/SerialManager.cpp">
 			<Option target="TJU-RM-2021"/>
 		</Unit>
+		<Unit filename="/home/nuc/tjurm/rm2021/Predictor/Include/KalmanFilter.h">
+			<Option target="TJU-RM-2021"/>
+		</Unit>
+		<Unit filename="/home/nuc/tjurm/rm2021/Predictor/Src/KalmanFilter.cpp">
+			<Option target="TJU-RM-2021"/>
+		</Unit>
 		<Unit filename="/home/nuc/tjurm/rm2021/Predictor/Src/Predictor.cpp">
 			<Option target="TJU-RM-2021"/>
 		</Unit>

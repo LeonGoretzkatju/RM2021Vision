@@ -10,6 +10,7 @@
 #include <opencv2/core/core.hpp>
 #include "SerialManager.h"
 #include "Utils.h"
+#include "KalmanFilter.h"
 
 extern SerialManager* serial_manager;
 
@@ -34,6 +35,7 @@ private:
 public:
     Filter* filter;
     DrawCurve* drawCurve;
+    EigenKalman::KalmanFilter* KF;
     Predictor() {}
     ~Predictor();
 
@@ -52,14 +54,16 @@ public:
         double yaw = get_yaw(x, z);
         double pitch = get_pitch(x, y, z);
 
-        serial_manager->uart_send(cv::Point2f(yaw, pitch), false);
+        serial_manager->uart_send(cv::Point2f(yaw, -0.118571),cv::Point2f(target.yaw,target.pitch), false);
         
         std::cout << "=============================================" << endl;
         std::cout << "receive yaw: " << target.yaw << std::endl;
         std::cout << "receive pitch: " << target.pitch << std::endl;
+        std::cout << "compute yaw" << yaw << std::endl;
+        std::cout << "compute pitch" << pitch << std::endl; 
         std::cout << "delta yaw: " << abs(target.yaw - yaw) << endl;
         std::cout << "=============================================" << endl;
-        drawCurve->InsertData(yaw,target.yaw,"after transform","origin yaw");
+        drawCurve->InsertData(pitch,target.pitch,"after transform","origin pitch");
         return true;
     }
 

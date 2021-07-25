@@ -20,6 +20,8 @@ struct ReceiveData{
 struct SendData{
     float final_yaw;    // 最终偏转角
     float final_pitch;
+    float origin_yaw;
+    float origin_pitch;
     bool fire;          // 发射指令
 };
 
@@ -35,7 +37,7 @@ public:
     ReceiveData receive_data;
     SendData send_data;
 
-    void uart_send(Point2f angle, bool fire);
+    void uart_send(Point2f angle, Point2f origin_angle, bool fire);
     Serial* m_serial;
 };
 
