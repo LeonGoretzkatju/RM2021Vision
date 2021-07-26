@@ -40,24 +40,35 @@ void ArmorFinder::run(cv::Mat &src) {
                 state = SEARCHING_STATE;
                 cout << "if" << endl;
                 // cout << "into searching" << endl;
+                predictor->clear();
             } else {
                 // 从串口处获取yaw pitch
                 double yaw = this->serial_manager->receive_data.curr_yaw;
                 double pitch = this->serial_manager->receive_data.curr_pitch;
-
-
                 // copy armor
                 Armor target = this->target_box;
 
                 // system time
                 systime t;
-
+                getsystime(t);
                 // push
                 // TODO: 处理角度
 //                drawCurve.InsertData();
-                predictor->push_back(
-                    Trace(target, t, yaw, pitch)
-                );
+                Trace trace = Trace(target, t, yaw, pitch);
+                predictor->push_back(trace);
+
+                if(predictor->predictor_cnt > 2){
+                    Point2f result = predictor->predict();
+                    serial_manager->uart_send(result, cv::Point2f(trace.yaw,trace.pitch), false);
+                } else{
+                    double x = trace.world_position.x;
+                    double y = trace.world_position.y;
+                    double z = trace.world_position.z;
+                    double yaw = get_yaw(x, z);
+                    double pitch = get_pitch(x, y, z);
+                    drawCurve->InsertData(pitch,trace.pitch,"after transform","origin pitch");
+                    serial_manager->uart_send(cv::Point2f(yaw, pitch), cv::Point2f(trace.yaw,trace.pitch), false);
+                }
             }
             break;
     }

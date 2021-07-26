@@ -90,3 +90,17 @@ cv::Point3f Predictor::solve_pnp(Trace& trace){
     return Point3f(tvecs.ptr<double>(0)[0], -tvecs.ptr<double>(0)[1], -10700.0/box.height*10.0);
 
 }
+
+Point2f Predictor::predict(){
+    Trace last, now;
+    this->armor_traces.get_now2(now, last);
+    double v_x, v_y, v_z;
+    v_x = (now.world_position.x - last.world_position.x) / (now.time - last.time);
+    v_y = (now.world_position.y - last.world_position.y) / (now.time - last.time);
+    v_z = (now.world_position.z - last.world_position.z) / (now.time - last.time);
+    this->z << now.world_position.x, now.world_position.y, now.world_position.z,
+         v_x, v_y, v_z;
+    KF->update(x, z);
+    KF->predict(x);
+    return Point2f(get_yaw(x[0], x[2]), get_pitch(x[0], x[1], x[2]));
+}

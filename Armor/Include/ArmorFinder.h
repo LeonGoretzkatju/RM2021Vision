@@ -9,6 +9,7 @@
 #include "../../Tools/Include/Utils.h" 
 #include <opencv2/core/core.hpp>
 #include <opencv2/video/tracking.hpp>
+#include "../../Tools/Include/Draw_Curve.h"
 
 #define BLOB_RED    ENEMY_RED
 #define BLOB_BLUE   ENEMY_BLUE
@@ -48,6 +49,7 @@ private:
 public:
     ArmorFinder(const uint8_t& color, SerialManager* serial_manager, Predictor* predictor);
     ~ArmorFinder() = default;
+    DrawCurve* drawCurve;
     void run(cv::Mat& src);
 
 };

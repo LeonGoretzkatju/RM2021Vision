@@ -5,7 +5,6 @@
 #include "../../Tools/Include/RoundQueue.h"
 #include "../../Tools/Include/systime.h"
 #include "../../Armor/Include/Armor.h"
-#include "../../Tools/Include/Draw_Curve.h"
 #include "Filter.h"
 #include <opencv2/core/core.hpp>
 #include "SerialManager.h"
@@ -32,13 +31,55 @@ public:
 
 class Predictor{
 private:
-    RoundQueue<Trace, 5> armor_traces;
+    RoundQueue<Trace, 3> armor_traces;
+    Eigen::MatrixXd A, P, R, Q, H;
+    Eigen::VectorXd x, z;
 public:
+    int predictor_cnt = 0;
     Filter* filter;
-    DrawCurve* drawCurve;
     EigenKalman::KalmanFilter* KF;
-    Predictor() {}
-    ~Predictor();
+
+    // TODO:
+    Predictor() {
+        this->KF = new EigenKalman::KalmanFilter();
+        A << 1, 0, 0, 1, 0, 0,
+             0, 1, 0, 0, 1, 0,
+             0, 0, 1, 0, 0, 1,
+             0, 0, 0, 1, 0, 0,
+             0, 0, 0, 0, 1, 0,
+             0, 0, 0, 0, 0, 1;
+
+        P << 1, 0, 0, 1, 0, 0,
+             0, 1, 0, 0, 1, 0,
+             0, 0, 1, 0, 0, 1,
+             0, 0, 0, 1, 0, 0,
+             0, 0, 0, 0, 1, 0,
+             0, 0, 0, 0, 0, 1;
+
+        R << 1, 0, 0, 1, 0, 0,
+             0, 1, 0, 0, 1, 0,
+             0, 0, 1, 0, 0, 1,
+             0, 0, 0, 1, 0, 0,
+             0, 0, 0, 0, 1, 0,
+             0, 0, 0, 0, 0, 1;
+
+        Q << 1, 0, 0, 1, 0, 0,
+             0, 1, 0, 0, 1, 0,
+             0, 0, 1, 0, 0, 1,
+             0, 0, 0, 1, 0, 0,
+             0, 0, 0, 0, 1, 0,
+             0, 0, 0, 0, 0, 1;
+
+        H << 1, 0, 0, 1, 0, 0,
+             0, 1, 0, 0, 1, 0,
+             0, 0, 1, 0, 0, 1,
+             0, 0, 0, 1, 0, 0,
+             0, 0, 0, 0, 1, 0,
+             0, 0, 0, 0, 0, 1;
+
+        KF->init(6, 6, this->A, this->P, this->R, this->Q, this->H);
+    }
+    ~Predictor() {}
 
     cv::Point3f solve_pnp(Trace& trace);
 
@@ -46,27 +87,15 @@ public:
 
     bool push_back(Trace target){
         if(!coordinate_trans(target)){
-            std::cout << "wrong" << std::endl;
+            log_error("coo wrong");
         }
-        this->armor_traces.push(target);
-        double x = target.world_position.x;
-        double y = target.world_position.y;
-        double z = target.world_position.z;
-        double yaw = get_yaw(x, z);
-        double pitch = get_pitch(x, y, z);
-
-        serial_manager->uart_send(cv::Point2f(yaw, pitch),cv::Point2f(target.yaw,target.pitch), false);
-        
-        log_var("current pitch from backend", "%f", target.pitch);
-        log_var("compute pitch", "%f", pitch);
-        log_var("delta pitch", "%f", abs(target.pitch - pitch));
-
-        drawCurve->InsertData(pitch,target.pitch,"after transform","origin pitch");
         return true;
     }
 
+    Point2f predict();
+
     bool clear(){
-        return this->armor_traces.clear();
+        return predictor_cnt = 0 && this->armor_traces.clear();
     }
 };
 

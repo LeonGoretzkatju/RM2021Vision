@@ -54,6 +54,11 @@ public:
         return true;
     };
 
+    bool get_now2(type& obj_new, type& obj_last) const{
+        obj_new = data[head];
+        obj_last = data[(head-1+length)%length];
+    }
+
     bool clear(){
         this->head = this->tail;
     }
