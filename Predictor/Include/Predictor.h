@@ -11,6 +11,7 @@
 #include "SerialManager.h"
 #include "Utils.h"
 #include "KalmanFilter.h"
+#include "log.h"
 
 extern SerialManager* serial_manager;
 
@@ -56,13 +57,10 @@ public:
 
         serial_manager->uart_send(cv::Point2f(yaw, pitch),cv::Point2f(target.yaw,target.pitch), false);
         
-        std::cout << "=============================================" << endl;
-        std::cout << "receive yaw: " << target.yaw << std::endl;
-        std::cout << "receive pitch: " << target.pitch << std::endl;
-        std::cout << "compute yaw" << yaw << std::endl;
-        std::cout << "compute pitch" << pitch << std::endl; 
-        std::cout << "delta yaw: " << abs(target.yaw - yaw) << endl;
-        std::cout << "=============================================" << endl;
+        log_var("current pitch from backend", "%f", target.pitch);
+        log_var("compute pitch", "%f", pitch);
+        log_var("delta pitch", "%f", abs(target.pitch - pitch));
+
         drawCurve->InsertData(pitch,target.pitch,"after transform","origin pitch");
         return true;
     }
