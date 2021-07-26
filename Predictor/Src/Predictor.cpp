@@ -93,14 +93,20 @@ cv::Point3f Predictor::solve_pnp(Trace& trace){
 
 Point2f Predictor::predict(){
     Trace last, now;
-    this->armor_traces.get_now2(now, last);
+    this->armor_traces.get_now2(last, now);
+    cout << "now time" << "               " << now.time << endl;
+    cout << "last time" << "                " << last.time << endl;
     double v_x, v_y, v_z;
+    cout << "delta time" << (now.time - last.time) << endl;
     v_x = (now.world_position.x - last.world_position.x) / (now.time - last.time);
     v_y = (now.world_position.y - last.world_position.y) / (now.time - last.time);
     v_z = (now.world_position.z - last.world_position.z) / (now.time - last.time);
     this->z << now.world_position.x, now.world_position.y, now.world_position.z,
          v_x, v_y, v_z;
+    KF->predict(A, x);
     KF->update(x, z);
-    KF->predict(x);
+    A(0, 3) = now.time - last.time;
+    A(1, 4) = now.time - last.time;
+    A(2, 5) = now.time - last.time;
     return Point2f(get_yaw(x[0], x[2]), get_pitch(x[0], x[1], x[2]));
 }

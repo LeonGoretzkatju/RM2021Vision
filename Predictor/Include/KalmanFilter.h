@@ -24,20 +24,20 @@ namespace EigenKalman{
         * @函数: init
         * @描述: 初始化kalman预判参数
          */
-        void init(int state, int means, Eigen::MatrixXd& _A, Eigen::MatrixXd& _P, Eigen::MatrixXd& _R, Eigen::MatrixXd& _Q, Eigen::MatrixXd& _H);
+        void init(int state, int means, Eigen::Matrix<double, 6, 6>& _A, Eigen::Matrix<double, 6, 6>& _P, Eigen::Matrix<double, 6, 6>& _R, Eigen::Matrix<double, 6, 6>& _Q, Eigen::Matrix<double, 6, 6>& _H);
         /**
         * @函数: predict
         * @描述: kalman预测
         * @输入输出:Eigen::VectorXd &x 状态向量
         */
-        void predict(Eigen::VectorXd &x);
+        void predict(Eigen::Matrix<double, 6, 6> & _A, Eigen::Matrix<double, 6, 1> &x);
         /**
         * @函数: update
         * @描述: kalman更新
         * @输入: Eigen::VectorXd z_meas 测量参数向量
         * @输入输出:Eigen::VectorXd &x 状态向量
          */
-        void update(Eigen::VectorXd &x, Eigen::VectorXd z_meas);
+        void update(Eigen::Matrix<double, 6, 1> &x, Eigen::Matrix<double, 6, 1> z_meas);
     };
 }
 

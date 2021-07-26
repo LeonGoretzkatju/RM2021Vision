@@ -7,7 +7,7 @@ namespace EigenKalman {
     KalmanFilter::KalmanFilter() {
     }
 
-    void KalmanFilter::init(int state, int meas, Eigen::MatrixXd & _A, Eigen::MatrixXd & _P, Eigen::MatrixXd & _R, Eigen::MatrixXd & _Q, Eigen::MatrixXd & _H){
+    void KalmanFilter::init(int state, int meas, Eigen::Matrix<double, 6, 6> & _A, Eigen::Matrix<double, 6, 6> & _P, Eigen::Matrix<double, 6, 6> & _R, Eigen::Matrix<double, 6, 6> & _Q, Eigen::Matrix<double, 6, 6> & _H){
         stateSize = state;
         measSize = meas;
         A = _A;
@@ -17,13 +17,13 @@ namespace EigenKalman {
         H = _H;
     }
 
-    void KalmanFilter::predict(Eigen::VectorXd &x){
+    void KalmanFilter::predict(Eigen::Matrix<double, 6, 6> & _A, Eigen::Matrix<double, 6, 1> &x){
         x = A * x;
         Eigen::MatrixXd A_T = A.transpose();
         P = A * P*A_T + Q;
     }
 
-    void KalmanFilter::update(Eigen::VectorXd &x, Eigen::VectorXd z_meas){
+    void KalmanFilter::update(Eigen::Matrix<double, 6, 1> &x, Eigen::Matrix<double, 6, 1> z_meas){
         Eigen::MatrixXd temp1, temp2, Ht;
         Ht = H.transpose();
         temp1 = H * P * Ht + R;

@@ -11,6 +11,8 @@
 #include "Utils.h"
 #include "KalmanFilter.h"
 #include "log.h"
+#include "Eigen/Dense"
+#include "../Include/Draw_Curve.h"
 
 extern SerialManager* serial_manager;
 
@@ -32,12 +34,13 @@ public:
 class Predictor{
 private:
     RoundQueue<Trace, 3> armor_traces;
-    Eigen::MatrixXd A, P, R, Q, H;
-    Eigen::VectorXd x, z;
+    Eigen::Matrix<double,6,6> A, P, R, Q, H;
+    Eigen::Matrix<double,6,1> x, z;
 public:
     int predictor_cnt = 0;
     Filter* filter;
     EigenKalman::KalmanFilter* KF;
+    DrawCurve* drawCurve;
 
     // TODO:
     Predictor() {
@@ -49,30 +52,30 @@ public:
              0, 0, 0, 0, 1, 0,
              0, 0, 0, 0, 0, 1;
 
-        P << 1, 0, 0, 1, 0, 0,
-             0, 1, 0, 0, 1, 0,
-             0, 0, 1, 0, 0, 1,
+        P << 1, 0, 0, 0, 0, 0,
+             0, 1, 0, 0, 0, 0,
+             0, 0, 1, 0, 0, 0,
              0, 0, 0, 1, 0, 0,
              0, 0, 0, 0, 1, 0,
              0, 0, 0, 0, 0, 1;
 
-        R << 1, 0, 0, 1, 0, 0,
-             0, 1, 0, 0, 1, 0,
-             0, 0, 1, 0, 0, 1,
+        R << 50, 0, 0, 0, 0, 0,
+             0, 50, 0, 0, 0, 0,
+             0, 0, 50, 0, 0, 0,
+             0, 0, 0, 50, 0, 0,
+             0, 0, 0, 0, 50, 0,
+             0, 0, 0, 0, 0, 50;
+
+        Q << 5, 0, 0, 0, 0, 0,
+             0, 1, 0, 0, 0, 0,
+             0, 0, 5, 0, 0, 0,
              0, 0, 0, 1, 0, 0,
-             0, 0, 0, 0, 1, 0,
+             0, 0, 0, 0, 5, 0,
              0, 0, 0, 0, 0, 1;
 
-        Q << 1, 0, 0, 1, 0, 0,
-             0, 1, 0, 0, 1, 0,
-             0, 0, 1, 0, 0, 1,
-             0, 0, 0, 1, 0, 0,
-             0, 0, 0, 0, 1, 0,
-             0, 0, 0, 0, 0, 1;
-
-        H << 1, 0, 0, 1, 0, 0,
-             0, 1, 0, 0, 1, 0,
-             0, 0, 1, 0, 0, 1,
+        H << 1, 0, 0, 0, 0, 0,
+             0, 1, 0, 0, 0, 0,
+             0, 0, 1, 0, 0, 0,
              0, 0, 0, 1, 0, 0,
              0, 0, 0, 0, 1, 0,
              0, 0, 0, 0, 0, 1;
@@ -89,10 +92,12 @@ public:
         if(!coordinate_trans(target)){
             log_error("coo wrong");
         }
+        armor_traces.push(target);
         return true;
     }
 
     Point2f predict();
+
 
     bool clear(){
         return predictor_cnt = 0 && this->armor_traces.clear();

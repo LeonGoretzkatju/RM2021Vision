@@ -44,7 +44,7 @@ bool Serial::init_port(int n_speed, char n_event, int n_bits, int n_stop){
         return false;
     }
 
-    int chmod = system("echo 200902 | sudo -S chmod 777 /dev/ttyUSB*");
+    int chmod = system("echo tjurm | sudo -S chmod 777 /dev/ttyUSB*");
     if(chmod == -1){
         cout << "chmod false" << endl;
     }

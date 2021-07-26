@@ -24,7 +24,7 @@
 
 /* log apis */
 #define log_error(format, ...)         __log_error__(format, ##__VA_ARGS__)
-#define log_warning(format, ...)       __log_warning__(format, ##__VA_ARGS__)
+// #define log_warning(format, ...)       __log_warning__(format, ##__VA_ARGS__)
 #define log_msg(format, ...)           __log_msg__(format, ##__VA_ARGS__)
 #define log_var(var_name, format, ...) __log_var__(var_name, format, ##__VA_ARGS__)
 
@@ -38,7 +38,7 @@
 /* log levels */
 #define __none__    0
 #define __error__   1
-#define __warning__ 2
+// #define __warning__ 2
 #define __msg__     3
 
 /* check whether log level is valid */
@@ -61,8 +61,8 @@
     #define __log_level__ __none__
 #elif log_level == __error__
     #define __log_level__ __error__
-#elif log_level == __warning__
-    #define __log_level__ __warning__
+// #elif log_level == __warning__
+//     #define __log_level__ __warning__
 #else
     #define __log_level__ __msg__
 #endif
@@ -91,12 +91,12 @@
 #endif
 
 /* log warning */
-#if __log_level__ >= __warning__
-    #define __log_warning__(format, ...) \
-            __output__(__to_warning__(format), __LINE__, ##__VA_ARGS__)
-#else
-    #define __log_warning__(format, ...) ((void)0)
-#endif
+// #if __log_level__ >= __warning__
+//     #define __log_warning__(format, ...) \
+//             __output__(__to_warning__(format), __LINE__, ##__VA_ARGS__)
+// #else
+//     #define __log_warning__(format, ...) ((void)0)
+// #endif
 
 /* log message */
 #if __log_level__ >= __msg__

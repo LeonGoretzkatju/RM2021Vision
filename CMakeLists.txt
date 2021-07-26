@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 project(TJU-RM-2021)
-
+add_definitions(-w)
 SET(CMAKE_CXX_STANDARD 11)
 SET(CMAKE_BUILD_TYPE RELEASE)
 add_definitions("-Wall -g")
