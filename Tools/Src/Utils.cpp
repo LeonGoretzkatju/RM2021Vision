@@ -6,7 +6,6 @@ double getPointLength(const cv::Point2f &p) {
 }
 
 double get_pitch(double x, double y, double z) {
-    std::cout <<"py: " << y << std::endl;
     return atan(y / sqrt(x * x + z * z));
 }
 

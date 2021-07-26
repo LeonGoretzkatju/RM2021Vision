@@ -1,5 +1,6 @@
 #include "../Include/Predictor.h"
 #include <Eigen/Dense>
+#include "log.h"
 
 using namespace cv;
 using namespace Eigen;
@@ -9,6 +10,8 @@ bool Predictor::coordinate_trans(Trace& trace){
     Matrix<double, 3, 1> camera_coo;
     Matrix<double, 3, 1> world_pos;
     Matrix3d r_inverse, r_x, r_y, r_yaw, r_pitch;
+
+
 
     camera_coo << camera_pos.x, camera_pos.y, camera_pos.z;
     // cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << "camera coordinate " << camera_coo;
