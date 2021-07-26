@@ -54,7 +54,7 @@ public:
         double yaw = get_yaw(x, z);
         double pitch = get_pitch(x, y, z);
 
-        serial_manager->uart_send(cv::Point2f(yaw, -0.118571),cv::Point2f(target.yaw,target.pitch), false);
+        serial_manager->uart_send(cv::Point2f(yaw, pitch),cv::Point2f(target.yaw,target.pitch), false);
         
         std::cout << "=============================================" << endl;
         std::cout << "receive yaw: " << target.yaw << std::endl;

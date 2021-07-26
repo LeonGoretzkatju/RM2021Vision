@@ -11,7 +11,9 @@ bool Predictor::coordinate_trans(Trace& trace){
     Matrix3d r_inverse, r_x, r_y, r_yaw, r_pitch;
 
     camera_coo << camera_pos.x, camera_pos.y, camera_pos.z;
-    // cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << "camera coordinate " << camera_coo;
+    cout << "                      coo                " << camera_pos.x << " "
+                                                        << camera_pos.y << " "
+                                                        << camera_pos.z << endl;
     r_x << 1, 0, 0,
            0, cos(trace.pitch), sin(trace.pitch),
            0, -sin(trace.pitch), cos(trace.pitch);
@@ -33,7 +35,7 @@ bool Predictor::coordinate_trans(Trace& trace){
     world_pos = r_inverse * camera_coo;
 
     trace.world_position = Point3f(world_pos[0], world_pos[1], world_pos[2]);
-    std::cout << "                                " << trace.world_position << std::endl;
+    std::cout << "              wddd               " << trace.world_position << std::endl;
     return true;
 }
 
@@ -67,10 +69,10 @@ cv::Point3f Predictor::solve_pnp(Trace& trace){
     // fx, 0, cx
     // 0, fy, cy
     // 0, 0, 1
-    Mat inner_matrix = (Mat_<double>(3, 3) << 933.94931947048565, 0, 320.0,
-                                                0, 933.94931947048565, 240.0,
-                                                0, 0, 1);
-    Mat distortion_matrix = (Mat_<double>(5, 1) << 0.0528381602513808, -1.9140458072801805, 0.0, 0.0, 9.1338656641243716);
+    Mat inner_matrix = (Mat_<double>(3, 3) << 940.8970, 0, 325.7120,
+                                                0, 942.1127, 255.2932,
+                                                0, 0, 1.0000);
+    Mat distortion_matrix = (Mat_<double>(5, 1) << -0.0904, -0.1856, 0.2290, 0.0, 0.0);
 
     // solve pnp
     Mat rvecs = cv::Mat::zeros(3, 1, CV_64FC1);
@@ -82,7 +84,6 @@ cv::Point3f Predictor::solve_pnp(Trace& trace){
     // Rodrigues(Rod_r, RotationR);
     // cout << "C(Camera center:):" << endl << -RotationR.inv()*TransMatrix << endl;//这个C果然是相机中心，十分准确
     // cout << "shiji distance                                     " << -tvecs.ptr<double>(0)[2] << endl;
-    cout << "camera coordinate pose x " << "                                 "<< tvecs << endl;
-    return Point3f(tvecs.ptr<double>(0)[0], tvecs.ptr<double>(0)[1], -tvecs.ptr<double>(0)[2]);
+    return Point3f(tvecs.ptr<double>(0)[0], -tvecs.ptr<double>(0)[1], -10700.0/box.height*10.0);
 
 }
