@@ -92,21 +92,28 @@ cv::Point3f Predictor::solve_pnp(Trace& trace){
 }
 
 Point2f Predictor::predict(){
-    Trace last, now;
-    this->armor_traces.get_now2(last, now);
+    Trace llast, last, now;
+    this->armor_traces.get_now3(llast,last, now);
     cout << "now time" << "               " << now.time << endl;
     cout << "last time" << "                " << last.time << endl;
+    cout << "llast time" << "                " << llast.time << endl;
     double v_x, v_y, v_z;
+    double old_v_x, old_v_y, old_v_z;
     cout << "delta time" << (now.time - last.time) << endl;
     v_x = (now.world_position.x - last.world_position.x) / (now.time - last.time);
     v_y = (now.world_position.y - last.world_position.y) / (now.time - last.time);
     v_z = (now.world_position.z - last.world_position.z) / (now.time - last.time);
+    old_v_x = (last.world_position.x - llast.world_position.x) / (last.time - llast.time);
+    old_v_y = (last.world_position.y - llast.world_position.y) / (last.time - llast.time);
+    old_v_z = (last.world_position.z - llast.world_position.z) / (last.time - llast.time);
+    this->x << last.world_position.x, last.world_position.y, last.world_position.z,
+               old_v_x, old_v_y, old_v_z;
     this->z << now.world_position.x, now.world_position.y, now.world_position.z,
          v_x, v_y, v_z;
-    KF->predict(A, x);
-    KF->update(x, z);
     A(0, 3) = now.time - last.time;
     A(1, 4) = now.time - last.time;
     A(2, 5) = now.time - last.time;
+    KF->predict(A, x);
+    KF->update(x, z);
     return Point2f(get_yaw(x[0], x[2]), get_pitch(x[0], x[1], x[2]));
 }
