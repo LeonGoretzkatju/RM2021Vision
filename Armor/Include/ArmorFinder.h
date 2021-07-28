@@ -2,6 +2,7 @@
 #define __ARMOR_FINDER_H_
 
 #include "Armor.h"
+#include "Classifier.h"
 #include "../../Tools/Include/systime.h"
 #include "../../Tools/Include/constants.h"
 #include "../../Other/Serial/Include/SerialManager.h"
@@ -10,12 +11,6 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/video/tracking.hpp>
 #include "../../Tools/Include/Draw_Curve.h"
-
-#define BLOB_RED    ENEMY_RED
-#define BLOB_BLUE   ENEMY_BLUE
-
-#define BOX_RED     ENEMY_RED
-#define BOX_BLUE    ENEMY_BLUE
 
 
 typedef std::vector<Armor> Armors;
@@ -34,7 +29,7 @@ private:
     Armor target_box, last_box;                         // 目标装甲板
     int anti_switch_cnt;                                // 防止乱切目标计数器
     // cv::Ptr<cv::Tracker> tracker;                       // tracker对象实例
-    // Classifier classifier;                              // CNN分类器对象实例，用于数字识别
+    Classifier classifier;                              // CNN分类器对象实例，用于数字识别
     int tracking_cnt;                                   // 记录追踪帧数，用于定时退出追踪
 
     SerialManager* serial_manager; // 与串口交互
@@ -47,7 +42,7 @@ private:
     bool stateSearchingTarget(const cv::Mat& src);            // searching state主函数
     bool stateTrackingTarget(cv::Mat& src);             // tracking state主函数
 public:
-    ArmorFinder(const uint8_t& color, SerialManager* serial_manager, Predictor* predictor);
+    ArmorFinder(const uint8_t& color, SerialManager* serial_manager, Predictor* predictor, const string &paras_folder);
     ~ArmorFinder() = default;
     DrawCurve* drawCurve;
     void run(cv::Mat& src);

@@ -130,12 +130,12 @@ bool ArmorFinder::findArmors(const cv::Mat &src, Armor &box) {
     }
 
 // 如果分类器可用，则使用分类器对装甲板候选区进行筛选
-    // if (classifier) {
+    if (classifier) {
         for (auto &armor_box : armor_boxes) {
             cv::Mat roi = src(armor_box.armor_rect).clone();
             cv::resize(roi, roi, cv::Size(48, 36));
-            // int c = classifier(roi);
-            // armor_box.id = c;
+            int c = classifier(roi);
+            armor_box.id = c;
         }
         
 // 按照优先级对装甲板进行排序
@@ -157,11 +157,8 @@ bool ArmorFinder::findArmors(const cv::Mat &src, Armor &box) {
             return false;
         }
 
-        // if (show_armor_boxes && state==SEARCHING_STATE) {
-        //     showArmorBoxesClass("class", src, armor_boxes);
-        // }
-    // } else { // 如果分类器不可用，则直接选取候选区中的第一个区域作为目标(往往会误识别)
-    //     box = armor_boxes[0];
-    // }
+    } else { // 如果分类器不可用，则直接选取候选区中的第一个区域作为目标(往往会误识别)
+        box = armor_boxes[0];
+    }
     return true;
 }

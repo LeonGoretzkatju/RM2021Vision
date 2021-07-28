@@ -7,12 +7,13 @@
 
 using namespace std;
 
-ArmorFinder::ArmorFinder(const uint8_t &color, SerialManager* serial_manager, Predictor* predictor) :
+ArmorFinder::ArmorFinder(const uint8_t &color, SerialManager* serial_manager, Predictor* predictor, const string &paras_folder) :
         enemy_color(color),
         state(SEARCHING_STATE),
         tracking_cnt(0),
         serial_manager(serial_manager),
-        predictor(predictor)
+        predictor(predictor),
+        classifier(paras_folder)
         {}
 
 void ArmorFinder::run(cv::Mat &src) {
@@ -23,9 +24,8 @@ void ArmorFinder::run(cv::Mat &src) {
         case SEARCHING_STATE:
             cout << "searching state" << endl;
             if (stateSearchingTarget(src)) {
-                if ((target_box.armor_rect & cv::Rect2d(0, 0, 640, 480)) == target_box.armor_rect) { // 判断装甲板区域是否脱离图像区域
-                    // tracker = TrackerToUse::create();                       // 成功搜寻到装甲板，创建tracker对象
-                    // tracker->init(src, target_box.armor_rect);
+                if ((target_box.armor_rect & cv::Rect2d(0, 0, 640, 480)) == target_box.armor_rect) { 
+                    // 判断装甲板区域是否脱离图像区域
                     
                     // TODO: 添加当前串口信息
                     state = TRACKING_STATE;

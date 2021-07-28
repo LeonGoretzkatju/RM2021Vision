@@ -11,6 +11,8 @@ using namespace std;
 
 // void uart_receive(Serial* p_serial);
 
+// 只需要被一个类使用，采用包含
+// 需要被其他功能模块复用，采用委托
 SerialManager* serial_manager = nullptr;
 Wrapper* wrapper = nullptr;
 Predictor* predictor = nullptr;
@@ -22,7 +24,7 @@ int main(){
 
     // uint8_t enemy_color = serial_manager->receive_data.enemy_color;
     predictor = new Predictor();
-    ArmorFinder* armor_finder = new ArmorFinder(ENEMY_BLUE, serial_manager, predictor);
+    ArmorFinder* armor_finder = new ArmorFinder(ENEMY_BLUE, serial_manager, predictor, "./Tools/para");
     cv::Mat src;
     // if from camera
     wrapper = new CameraWrapper(5, 100, 2);
@@ -77,20 +79,4 @@ int main(){
     delete wrapper;
 
     return 0;
-
-    // float i = 0;
-    // Point2f test;
-    // test.x = 3.14;
-    // test.y = 2.71;
-    // while(true){
-    //     test.x += 0.01;
-    //     test.y += 0.01;
-    //     cout << serial_manager->receive_data.curr_pitch << endl
-    //          << serial_manager->receive_data.curr_yaw << endl
-    //          << serial_manager->receive_data.shoot_speed << endl;
-    //     serial_manager->uart_send(test, true);
-    //     cout << "test.x" << test.x << endl;
-    //     cout << "test.y" << test.y << endl;
-    //     usleep(1000);
-    // }
 }
