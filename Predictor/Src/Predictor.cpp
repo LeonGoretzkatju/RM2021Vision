@@ -82,6 +82,7 @@ cv::Point3f Predictor::solve_pnp(Trace& trace){
     bool success = cv::solvePnP(
         obj_pnts, img_pnts, inner_matrix, distortion_matrix, rvecs, tvecs
     );
+    trace.distance = 10700.0/box.height*10.0;
     // Rodrigues(Rod_r, RotationR);
     // cout << "C(Camera center:):" << endl << -RotationR.inv()*TransMatrix << endl;//这个C果然是相机中心，十分准确
     // cout << "shiji distance                                     " << -tvecs.ptr<double>(0)[2] << endl;
@@ -113,5 +114,11 @@ Point2f Predictor::predict(){
     A(2, 5) = now.time - last.time;
     KF->predict(A, x);
     KF->update(x, z);
+    cout << "fly distance" << "    " << now.distance <<endl;
+    float fly_time = now.distance/15.0/1000.0; // unit/seconds
+    x[0] = x[0]/1000 + x[3]*fly_time;
+    x[1] = x[1]/1000 + x[4]*fly_time;
+    x[2] = x[2]/1000 + x[5]*fly_time;
+
     return Point2f(get_yaw(x[0], x[2]), get_pitch(x[0], x[1], x[2]));
 }

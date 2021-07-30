@@ -24,7 +24,7 @@ int main(){
 
     // uint8_t enemy_color = serial_manager->receive_data.enemy_color;
     predictor = new Predictor();
-    ArmorFinder* armor_finder = new ArmorFinder(ENEMY_BLUE, serial_manager, predictor, "./Tools/para");
+    ArmorFinder* armor_finder = new ArmorFinder(ENEMY_BLUE, serial_manager, predictor, "/home/nuc/rm2021/Tools/para/");
     cv::Mat src;
     // if from camera
     wrapper = new CameraWrapper(5, 100, 2);

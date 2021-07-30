@@ -67,10 +67,10 @@ RM = /home/nuc/tools/CLion-2021.1.2/clion-2021.1.2/bin/cmake/linux/bin/cmake -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nuc/tjurm/rm2021
+CMAKE_SOURCE_DIR = /home/nuc/rm2021
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nuc/tjurm/rm2021/cmake-build-release
+CMAKE_BINARY_DIR = /home/nuc/rm2021/cmake-build-release
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles /home/nuc/tjurm/rm2021/cmake-build-release//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nuc/rm2021/cmake-build-release/CMakeFiles /home/nuc/rm2021/cmake-build-release//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nuc/rm2021/cmake-build-release/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -141,6 +141,19 @@ TJU-RM-2021: cmake_check_build_system
 TJU-RM-2021/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/build
 .PHONY : TJU-RM-2021/fast
+
+#=============================================================================
+# Target rules for targets named kcf_tracker
+
+# Build rule for target.
+kcf_tracker: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 kcf_tracker
+.PHONY : kcf_tracker
+
+# fast build rule for target.
+kcf_tracker/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kcf_tracker.dir/build.make CMakeFiles/kcf_tracker.dir/build
+.PHONY : kcf_tracker/fast
 
 Armor/Src/Armor.o: Armor/Src/Armor.cpp.o
 
@@ -195,6 +208,33 @@ Armor/Src/ArmorFinder.s: Armor/Src/ArmorFinder.cpp.s
 Armor/Src/ArmorFinder.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/Armor/Src/ArmorFinder.cpp.s
 .PHONY : Armor/Src/ArmorFinder.cpp.s
+
+Armor/Src/Classifier.o: Armor/Src/Classifier.cpp.o
+
+.PHONY : Armor/Src/Classifier.o
+
+# target to build an object file
+Armor/Src/Classifier.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/Armor/Src/Classifier.cpp.o
+.PHONY : Armor/Src/Classifier.cpp.o
+
+Armor/Src/Classifier.i: Armor/Src/Classifier.cpp.i
+
+.PHONY : Armor/Src/Classifier.i
+
+# target to preprocess a source file
+Armor/Src/Classifier.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/Armor/Src/Classifier.cpp.i
+.PHONY : Armor/Src/Classifier.cpp.i
+
+Armor/Src/Classifier.s: Armor/Src/Classifier.cpp.s
+
+.PHONY : Armor/Src/Classifier.s
+
+# target to generate assembly for a file
+Armor/Src/Classifier.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/Armor/Src/Classifier.cpp.s
+.PHONY : Armor/Src/Classifier.cpp.s
 
 Armor/Src/FindArmor.o: Armor/Src/FindArmor.cpp.o
 
@@ -330,6 +370,60 @@ Armor/Src/TrackingState.s: Armor/Src/TrackingState.cpp.s
 Armor/Src/TrackingState.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/Armor/Src/TrackingState.cpp.s
 .PHONY : Armor/Src/TrackingState.cpp.s
+
+KCFcpp/src/fhog.o: KCFcpp/src/fhog.cpp.o
+
+.PHONY : KCFcpp/src/fhog.o
+
+# target to build an object file
+KCFcpp/src/fhog.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kcf_tracker.dir/build.make CMakeFiles/kcf_tracker.dir/KCFcpp/src/fhog.cpp.o
+.PHONY : KCFcpp/src/fhog.cpp.o
+
+KCFcpp/src/fhog.i: KCFcpp/src/fhog.cpp.i
+
+.PHONY : KCFcpp/src/fhog.i
+
+# target to preprocess a source file
+KCFcpp/src/fhog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kcf_tracker.dir/build.make CMakeFiles/kcf_tracker.dir/KCFcpp/src/fhog.cpp.i
+.PHONY : KCFcpp/src/fhog.cpp.i
+
+KCFcpp/src/fhog.s: KCFcpp/src/fhog.cpp.s
+
+.PHONY : KCFcpp/src/fhog.s
+
+# target to generate assembly for a file
+KCFcpp/src/fhog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kcf_tracker.dir/build.make CMakeFiles/kcf_tracker.dir/KCFcpp/src/fhog.cpp.s
+.PHONY : KCFcpp/src/fhog.cpp.s
+
+KCFcpp/src/kcftracker.o: KCFcpp/src/kcftracker.cpp.o
+
+.PHONY : KCFcpp/src/kcftracker.o
+
+# target to build an object file
+KCFcpp/src/kcftracker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kcf_tracker.dir/build.make CMakeFiles/kcf_tracker.dir/KCFcpp/src/kcftracker.cpp.o
+.PHONY : KCFcpp/src/kcftracker.cpp.o
+
+KCFcpp/src/kcftracker.i: KCFcpp/src/kcftracker.cpp.i
+
+.PHONY : KCFcpp/src/kcftracker.i
+
+# target to preprocess a source file
+KCFcpp/src/kcftracker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kcf_tracker.dir/build.make CMakeFiles/kcf_tracker.dir/KCFcpp/src/kcftracker.cpp.i
+.PHONY : KCFcpp/src/kcftracker.cpp.i
+
+KCFcpp/src/kcftracker.s: KCFcpp/src/kcftracker.cpp.s
+
+.PHONY : KCFcpp/src/kcftracker.s
+
+# target to generate assembly for a file
+KCFcpp/src/kcftracker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kcf_tracker.dir/build.make CMakeFiles/kcf_tracker.dir/KCFcpp/src/kcftracker.cpp.s
+.PHONY : KCFcpp/src/kcftracker.cpp.s
 
 Main.o: Main.cpp.o
 
@@ -610,12 +704,16 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... TJU-RM-2021"
+	@echo "... kcf_tracker"
 	@echo "... Armor/Src/Armor.o"
 	@echo "... Armor/Src/Armor.i"
 	@echo "... Armor/Src/Armor.s"
 	@echo "... Armor/Src/ArmorFinder.o"
 	@echo "... Armor/Src/ArmorFinder.i"
 	@echo "... Armor/Src/ArmorFinder.s"
+	@echo "... Armor/Src/Classifier.o"
+	@echo "... Armor/Src/Classifier.i"
+	@echo "... Armor/Src/Classifier.s"
 	@echo "... Armor/Src/FindArmor.o"
 	@echo "... Armor/Src/FindArmor.i"
 	@echo "... Armor/Src/FindArmor.s"
@@ -631,6 +729,12 @@ help:
 	@echo "... Armor/Src/TrackingState.o"
 	@echo "... Armor/Src/TrackingState.i"
 	@echo "... Armor/Src/TrackingState.s"
+	@echo "... KCFcpp/src/fhog.o"
+	@echo "... KCFcpp/src/fhog.i"
+	@echo "... KCFcpp/src/fhog.s"
+	@echo "... KCFcpp/src/kcftracker.o"
+	@echo "... KCFcpp/src/kcftracker.i"
+	@echo "... KCFcpp/src/kcftracker.s"
 	@echo "... Main.o"
 	@echo "... Main.i"
 	@echo "... Main.s"

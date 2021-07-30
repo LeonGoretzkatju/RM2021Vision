@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/local/include/eigen3 -I/home/nuc/tjurm/rm2021/Armor/Include -I/home/nuc/tjurm/rm2021/Predictor/Include -I/home/nuc/tjurm/rm2021/Tools/Include -I/home/nuc/tjurm/rm2021/Other/Serial/Include -I/home/nuc/tjurm/rm2021/Other/Camera/Include -isystem /usr/local/include/opencv4
+CXX_INCLUDES = -I/usr/local/include/eigen3 -I/home/nuc/rm2021/Armor/Include -I/home/nuc/rm2021/Predictor/Include -I/home/nuc/rm2021/Tools/Include -I/home/nuc/rm2021/Other/Serial/Include -I/home/nuc/rm2021/Other/Camera/Include -isystem /usr/local/include/opencv4
 
 CXX_FLAGS =  -O3 -g -O3 -DNDEBUG   -w -Wall -g -std=gnu++11
 

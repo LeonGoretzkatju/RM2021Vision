@@ -63,16 +63,17 @@ RM = /home/nuc/tools/CLion-2021.1.2/clion-2021.1.2/bin/cmake/linux/bin/cmake -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/nuc/tjurm/rm2021
+CMAKE_SOURCE_DIR = /home/nuc/rm2021
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/nuc/tjurm/rm2021/cmake-build-release
+CMAKE_BINARY_DIR = /home/nuc/rm2021/cmake-build-release
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
 all: CMakeFiles/TJU-RM-2021.dir/all
+all: CMakeFiles/kcf_tracker.dir/all
 
 .PHONY : all
 
@@ -83,6 +84,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/TJU-RM-2021.dir/clean
+clean: CMakeFiles/kcf_tracker.dir/clean
 
 .PHONY : clean
 
@@ -90,17 +92,17 @@ clean: CMakeFiles/TJU-RM-2021.dir/clean
 # Target rules for target CMakeFiles/TJU-RM-2021.dir
 
 # All Build rule for target.
-CMakeFiles/TJU-RM-2021.dir/all:
+CMakeFiles/TJU-RM-2021.dir/all: CMakeFiles/kcf_tracker.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 "Built target TJU-RM-2021"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nuc/rm2021/cmake-build-release/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 "Built target TJU-RM-2021"
 .PHONY : CMakeFiles/TJU-RM-2021.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/TJU-RM-2021.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nuc/rm2021/cmake-build-release/CMakeFiles 22
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/TJU-RM-2021.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nuc/tjurm/rm2021/cmake-build-release/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nuc/rm2021/cmake-build-release/CMakeFiles 0
 .PHONY : CMakeFiles/TJU-RM-2021.dir/rule
 
 # Convenience name for target.
@@ -112,6 +114,33 @@ TJU-RM-2021: CMakeFiles/TJU-RM-2021.dir/rule
 CMakeFiles/TJU-RM-2021.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TJU-RM-2021.dir/build.make CMakeFiles/TJU-RM-2021.dir/clean
 .PHONY : CMakeFiles/TJU-RM-2021.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/kcf_tracker.dir
+
+# All Build rule for target.
+CMakeFiles/kcf_tracker.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kcf_tracker.dir/build.make CMakeFiles/kcf_tracker.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kcf_tracker.dir/build.make CMakeFiles/kcf_tracker.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nuc/rm2021/cmake-build-release/CMakeFiles --progress-num=20,21,22 "Built target kcf_tracker"
+.PHONY : CMakeFiles/kcf_tracker.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/kcf_tracker.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nuc/rm2021/cmake-build-release/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/kcf_tracker.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nuc/rm2021/cmake-build-release/CMakeFiles 0
+.PHONY : CMakeFiles/kcf_tracker.dir/rule
+
+# Convenience name for target.
+kcf_tracker: CMakeFiles/kcf_tracker.dir/rule
+
+.PHONY : kcf_tracker
+
+# clean rule for target.
+CMakeFiles/kcf_tracker.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kcf_tracker.dir/build.make CMakeFiles/kcf_tracker.dir/clean
+.PHONY : CMakeFiles/kcf_tracker.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

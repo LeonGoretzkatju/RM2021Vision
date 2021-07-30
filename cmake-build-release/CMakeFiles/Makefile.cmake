@@ -61,4 +61,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/TJU-RM-2021.dir/DependInfo.cmake"
+  "CMakeFiles/kcf_tracker.dir/DependInfo.cmake"
   )

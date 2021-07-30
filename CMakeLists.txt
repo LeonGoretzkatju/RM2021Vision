@@ -23,11 +23,17 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Tools/Include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Other/Serial/Include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/Other/Camera/Include)
 
+add_library(kcf_tracker STATIC
+  KCFcpp/src/fhog.cpp
+  KCFcpp/src/kcftracker.cpp)
+target_link_libraries(kcf_tracker ${OpenCV_LIBRARIES})
+target_include_directories(kcf_tracker PRIVATE KCFcpp/src)
+
 
 FILE(GLOB_RECURSE sourcefiles "Other/Serial/Src/*.cpp" "Other/Camera/Src/*.cpp" "Tools/Src/*.cpp" "Armor/Src/*.cpp" "Predictor/Src/*.cpp")
 ADD_EXECUTABLE(TJU-RM-2021 Main.cpp ${sourcefiles} Tools/Include/Draw_Curve.h Tools/Src/Draw_Curve.cpp Predictor/Include/KalmanFilter.h Predictor/Src/KalmanFilter.cpp)
 
-TARGET_LINK_LIBRARIES(TJU-RM-2021 ${CMAKE_THREAD_LIBS_INIT})
+TARGET_LINK_LIBRARIES(TJU-RM-2021 kcf_tracker ${CMAKE_THREAD_LIBS_INIT})
 TARGET_LINK_LIBRARIES(TJU-RM-2021 ${OpenCV_LIBS})
 
 TARGET_LINK_LIBRARIES(TJU-RM-2021 "${PROJECT_SOURCE_DIR}/Other/Camera/libMVSDK.so")

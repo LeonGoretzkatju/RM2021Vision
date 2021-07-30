@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/TJU-RM-2021.dir/Armor/Src/Armor.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Armor/Src/ArmorFinder.cpp.o"
+  "CMakeFiles/TJU-RM-2021.dir/Armor/Src/Classifier.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Armor/Src/FindArmor.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Armor/Src/FindLights.cpp.o"
   "CMakeFiles/TJU-RM-2021.dir/Armor/Src/SearchingState.cpp.o"

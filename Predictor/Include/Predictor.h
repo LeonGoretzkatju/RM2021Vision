@@ -21,6 +21,8 @@ public:
     Armor armor;
     systime time;
     double yaw, pitch;
+    float distance;
+    
     cv::Point3f world_position;
     Trace() {}
     Trace(Armor armor, systime time, double yaw, double pitch){
@@ -66,12 +68,12 @@ public:
              0, 0, 0, 0, 50, 0,
              0, 0, 0, 0, 0, 50;
 
-        Q << 5, 0, 0, 0, 0, 0,
-             0, 1, 0, 0, 0, 0,
-             0, 0, 5, 0, 0, 0,
-             0, 0, 0, 1, 0, 0,
-             0, 0, 0, 0, 5, 0,
-             0, 0, 0, 0, 0, 1;
+        Q << 0.1, 0, 0, 0, 0, 0,
+             0, 0.1, 0, 0, 0, 0,
+             0, 0, 0.05, 0, 0, 0,
+             0, 0, 0, 0.1, 0, 0,
+             0, 0, 0, 0, 0.05, 0,
+             0, 0, 0, 0, 0, 0.1;
 
         H << 1, 0, 0, 0, 0, 0,
              0, 1, 0, 0, 0, 0,

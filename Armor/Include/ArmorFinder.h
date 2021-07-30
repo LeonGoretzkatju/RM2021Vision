@@ -11,6 +11,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/video/tracking.hpp>
 #include "../../Tools/Include/Draw_Curve.h"
+#include "../../KCFcpp/src/kcftracker.hpp"
 
 
 typedef std::vector<Armor> Armors;
@@ -29,6 +30,8 @@ private:
     Armor target_box, last_box;                         // 目标装甲板
     int anti_switch_cnt;                                // 防止乱切目标计数器
     // cv::Ptr<cv::Tracker> tracker;                       // tracker对象实例
+    int contour_area; 
+    KCFTracker *tracker;
     Classifier classifier;                              // CNN分类器对象实例，用于数字识别
     int tracking_cnt;                                   // 记录追踪帧数，用于定时退出追踪
 

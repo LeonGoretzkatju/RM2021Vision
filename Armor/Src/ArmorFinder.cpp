@@ -4,15 +4,14 @@
 #include <iostream>
 #include "Predictor.h"
 #include "log.h"
-
 using namespace std;
-
 ArmorFinder::ArmorFinder(const uint8_t &color, SerialManager* serial_manager, Predictor* predictor, const string &paras_folder) :
         enemy_color(color),
         state(SEARCHING_STATE),
         tracking_cnt(0),
         serial_manager(serial_manager),
         predictor(predictor),
+        contour_area(0),
         classifier(paras_folder)
         {}
 
@@ -40,7 +39,7 @@ void ArmorFinder::run(cv::Mat &src) {
             break;
         case TRACKING_STATE:
             cout << "tracking state" << endl;
-            if (!stateTrackingTarget(src) || ++tracking_cnt > 200) {    // 最多追踪100帧图像
+            if (!stateTrackingTarget(src) || ++tracking_cnt > 100) {    // 最多追踪100帧图像
                 state = SEARCHING_STATE;
                 cout << "if" << endl;
                 // cout << "into searching" << endl;

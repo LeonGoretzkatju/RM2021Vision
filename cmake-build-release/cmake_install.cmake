@@ -1,4 +1,4 @@
-# Install script for directory: /home/nuc/tjurm/rm2021
+# Install script for directory: /home/nuc/rm2021
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/nuc/tjurm/rm2021/cmake-build-release/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/nuc/rm2021/cmake-build-release/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
