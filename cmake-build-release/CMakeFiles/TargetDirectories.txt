@@ -1,4 +1,0 @@
-/home/nuc/rm2021/cmake-build-release/CMakeFiles/rebuild_cache.dir
-/home/nuc/rm2021/cmake-build-release/CMakeFiles/edit_cache.dir
-/home/nuc/rm2021/cmake-build-release/CMakeFiles/TJU-RM-2021.dir
-/home/nuc/rm2021/cmake-build-release/CMakeFiles/kcf_tracker.dir

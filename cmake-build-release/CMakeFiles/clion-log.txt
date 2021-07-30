@@ -1,4 +1,0 @@
-/home/nuc/tools/CLion-2021.1.2/clion-2021.1.2/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" /home/nuc/rm2021
--- Configuring done
--- Generating done
--- Build files have been written to: /home/nuc/rm2021/cmake-build-release
