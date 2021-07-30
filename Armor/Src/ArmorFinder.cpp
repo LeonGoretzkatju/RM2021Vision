@@ -4,6 +4,10 @@
 #include <iostream>
 #include "Predictor.h"
 #include "log.h"
+#define HOG 1
+#define FIXEDWINDOW 1
+#define MULTISCALE 1
+#define LAB 1
 using namespace std;
 ArmorFinder::ArmorFinder(const uint8_t &color, SerialManager* serial_manager, Predictor* predictor, const string &paras_folder) :
         enemy_color(color),
@@ -13,7 +17,9 @@ ArmorFinder::ArmorFinder(const uint8_t &color, SerialManager* serial_manager, Pr
         predictor(predictor),
         contour_area(0),
         classifier(paras_folder)
-        {}
+        {
+            tracker = new KCFTracker(HOG, FIXEDWINDOW, MULTISCALE, LAB);
+        }
 
 void ArmorFinder::run(cv::Mat &src) {
     getsystime(frame_time); //　获取当前帧时间(不是足够精确)
@@ -27,6 +33,7 @@ void ArmorFinder::run(cv::Mat &src) {
                     // 判断装甲板区域是否脱离图像区域
                     
                     // TODO: 添加当前串口信息
+                    tracker->init(target_box.armor_rect, src);
                     state = TRACKING_STATE;
                     tracking_cnt = 0;
                     // cout << "into track" << endl;

@@ -6,11 +6,11 @@
 #define LAB 1
 bool ArmorFinder::stateTrackingTarget(cv::Mat &src) {
     cv::Rect2d pos = target_box.armor_rect;
-    // if(tracker->update(src) == cv::Rect()){
-    //     target_box = Armor();
-    //     // LOGW("Track fail!");
-    //     return false;
-    // }
+    if(tracker->update(src) == cv::Rect()){
+        target_box = Armor();
+        // LOGW("Track fail!");
+        return false;
+    }
     if((pos & cv::Rect2d(0, 0, 640, 480)) != pos){
         target_box = Armor();
         // LOGW("Track out range!");
@@ -38,7 +38,6 @@ bool ArmorFinder::stateTrackingTarget(cv::Mat &src) {
         }
         // std::cout << target_box.getCenter().x << " " << target_box.getCenter().y << std::endl;
         // tracker = TrackerToUse::create();
-        tracker = new KCFTracker(HOG, FIXEDWINDOW, MULTISCALE, LAB);
         tracker->init(target_box.armor_rect,src);
     }else{    // 如果没有成功搜索目标，则使用判断是否跟丢。
         roi = src(pos).clone();
