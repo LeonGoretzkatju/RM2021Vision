@@ -4,11 +4,13 @@
 #include <iostream>
 #include "Predictor.h"
 #include "log.h"
+using namespace std;
+
 #define HOG 1
 #define FIXEDWINDOW 1
 #define MULTISCALE 1
 #define LAB 1
-using namespace std;
+
 ArmorFinder::ArmorFinder(const uint8_t &color, SerialManager* serial_manager, Predictor* predictor, const string &paras_folder) :
         enemy_color(color),
         state(SEARCHING_STATE),
@@ -16,8 +18,7 @@ ArmorFinder::ArmorFinder(const uint8_t &color, SerialManager* serial_manager, Pr
         serial_manager(serial_manager),
         predictor(predictor),
         contour_area(0),
-        classifier(paras_folder)
-        {
+        classifier(paras_folder){
             tracker = new KCFTracker(HOG, FIXEDWINDOW, MULTISCALE, LAB);
         }
 
@@ -43,6 +44,7 @@ void ArmorFinder::run(cv::Mat &src) {
                     serial_manager->uart_send(cv::Point2f(yaw, pitch), cv::Point2f(0,0), false);
                 }
             }
+            tracker->init(target_box.armor_rect,src);
             break;
         case TRACKING_STATE:
             cout << "tracking state" << endl;

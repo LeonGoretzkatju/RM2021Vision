@@ -1,9 +1,6 @@
 #include "../Include/ArmorFinder.h"
 #include <iostream>
-#define HOG 1
-#define FIXEDWINDOW 1
-#define MULTISCALE 1
-#define LAB 1
+
 bool ArmorFinder::stateTrackingTarget(cv::Mat &src) {
     cv::Rect2d pos = target_box.armor_rect;
     if(tracker->update(src) == cv::Rect()){
@@ -37,7 +34,7 @@ bool ArmorFinder::stateTrackingTarget(cv::Mat &src) {
             blob.light_rect.center.y += bigger_rect.y;
         }
         // std::cout << target_box.getCenter().x << " " << target_box.getCenter().y << std::endl;
-        // tracker = TrackerToUse::create();
+        // tracker = KCFTracker::create();
         tracker->init(target_box.armor_rect,src);
     }else{    // 如果没有成功搜索目标，则使用判断是否跟丢。
         roi = src(pos).clone();

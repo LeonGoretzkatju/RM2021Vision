@@ -1,4 +1,5 @@
 cmake-build-release
 build
+cmake-build-release
 *.mp4
 *.avi

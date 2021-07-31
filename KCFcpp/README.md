@@ -21,7 +21,7 @@ Description: KCF on HOG features, ported to C++ OpenCV. The original Matlab trac
 "KCFLabC++", command: ./KCF lab   
 Description: KCF on HOG and Lab features, ported to C++ OpenCV. The Lab features are computed by quantizing CIE-Lab colors into 15 centroids, obtained from natural images by k-means.   
 
-The CSK tracker [2] is also implemented as a bonus, simply by using raw grayscale as features (the filter becomes single-channel).   
+The CSK tracker [2] is also implemented as a bonus, simply by using raw grayscale as features (the filter becomes single-channel). 
 
 ### Compilation instructions ###
 There are no external dependencies other than OpenCV 3.0.0. Tested on a freshly installed Ubuntu 14.04.   
