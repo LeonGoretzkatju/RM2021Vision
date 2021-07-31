@@ -6,6 +6,7 @@
 #include <iostream>
 #include <thread>
 #include <unistd.h>
+#include "log.hpp"
 
 using namespace std;
 
@@ -44,25 +45,20 @@ int main(){
         do{
             systime st;
             getsystime(st);
-            cout << serial_manager->receive_data.curr_yaw << endl
-                      << serial_manager->receive_data.curr_pitch << endl
-                      << serial_manager->receive_data.shoot_speed << endl
-                      << (char)serial_manager->receive_data.state << endl
-                      << (char)serial_manager->receive_data.enemy_color << endl;
+            // cout << serial_manager->receive_data.curr_yaw << endl
+            //           << serial_manager->receive_data.curr_pitch << endl
+            //           << serial_manager->receive_data.shoot_speed << endl
+            //           << (char)serial_manager->receive_data.state << endl
+            //           << (char)serial_manager->receive_data.enemy_color << endl;
             uint8_t state = armor_mode;
             // uint8_t state = serial_manager->receive_data.state;
-            cout << "ckpt1: start reading image" << endl;
             wrapper->read(src);
-            cout << "ckpt2: finish reading image" << endl;
             imshow("show figure", src);
+            // cout << src << endl;
             waitKey(1);
-            cout << "ckpt3: finish showing image" << endl;
             switch(state){
                 case armor_mode :
-                    cout << "ckpt4: start running on this image." << endl;
                     armor_finder->run(src);
-                    cout << "ckpt5: finish running on this image" << endl;
-                    cout << endl;
                 break;
                 case energy_mode : 
                     // energy->run(src);

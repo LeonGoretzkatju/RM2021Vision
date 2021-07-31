@@ -10,7 +10,6 @@
 #include "SerialManager.h"
 #include "Utils.h"
 #include "KalmanFilter.h"
-#include "log.h"
 #include "Eigen/Dense"
 #include "../Include/Draw_Curve.h"
 
@@ -61,12 +60,12 @@ public:
              0, 0, 0, 0, 1, 0,
              0, 0, 0, 0, 0, 1;
 
-        R << 50, 0, 0, 0, 0, 0,
-             0, 50, 0, 0, 0, 0,
-             0, 0, 50, 0, 0, 0,
-             0, 0, 0, 50, 0, 0,
-             0, 0, 0, 0, 50, 0,
-             0, 0, 0, 0, 0, 50;
+        R << 5000, 0, 0, 0, 0, 0,
+             0, 5000, 0, 0, 0, 0,
+             0, 0, 5000, 0, 0, 0,
+             0, 0, 0, 5000, 0, 0,
+             0, 0, 0, 0, 5000, 0,
+             0, 0, 0, 0, 0, 5000;
 
         Q << 0.1, 0, 0, 0, 0, 0,
              0, 0.1, 0, 0, 0, 0,
@@ -92,7 +91,7 @@ public:
 
     bool push_back(Trace target){
         if(!coordinate_trans(target)){
-            log_error("coo wrong");
+            // log_error("coo wrong");
         }
         armor_traces.push(target);
         return true;

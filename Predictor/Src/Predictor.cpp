@@ -1,6 +1,5 @@
 #include "../Include/Predictor.h"
 #include <Eigen/Dense>
-#include "log.h"
 
 using namespace cv;
 using namespace Eigen;
@@ -118,9 +117,9 @@ Point2f Predictor::predict(){
     float fly_time = now.distance/15.0/1000.0; // unit/seconds
 
     double predict[3];
-    predict[0] = x[0]/1000 + x[3]*fly_time;
-    predict[1] = x[1]/1000 + x[4]*fly_time;
-    predict[2] = x[2]/1000 + x[5]*fly_time;
+    // predict[0] = x[0]/1000 + x[3]*fly_time;
+    // predict[1] = x[1]/1000 + x[4]*fly_time;
+    // predict[2] = x[2]/1000 + x[5]*fly_time;
 
-    return Point2f(get_yaw(predict[0], predict[2]), get_pitch(predict[0], predict[1], predict[2]));
+    return Point2f(get_yaw(x[0], x[2]), get_pitch(x[0], x[1], x[2]));
 }

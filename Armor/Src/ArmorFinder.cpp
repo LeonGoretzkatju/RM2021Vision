@@ -3,7 +3,7 @@
 #include <opencv2/core.hpp>
 #include <iostream>
 #include "Predictor.h"
-#include "log.h"
+#include "log.hpp"
 using namespace std;
 
 #define HOG 1
@@ -44,7 +44,7 @@ void ArmorFinder::run(cv::Mat &src) {
                     serial_manager->uart_send(cv::Point2f(yaw, pitch), cv::Point2f(0,0), false);
                 }
             }
-            tracker->init(target_box.armor_rect,src);
+            log_msg("reached this line.")
             break;
         case TRACKING_STATE:
             cout << "tracking state" << endl;

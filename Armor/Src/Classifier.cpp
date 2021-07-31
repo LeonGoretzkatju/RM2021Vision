@@ -1,5 +1,4 @@
 #include "../Include/Classifier.h"
-#include <log.h>
 #include <cstdio>
 #include <iostream>
 
