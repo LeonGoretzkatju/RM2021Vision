@@ -5,6 +5,7 @@
 #include "Predictor/Include/Predictor.h"
 #include <iostream>
 #include <thread>
+#include <QTime>
 #include <unistd.h>
 #include "log.hpp"
 
@@ -41,15 +42,19 @@ int main(){
 
         const uint8_t armor_mode = 0;
         const uint8_t energy_mode = 1;
+        int argc;char **argv = nullptr;
+        QApplication a(argc, argv);
+        MainWindow w;
+        w.show();
 
         do{
             systime st;
             getsystime(st);
-            // cout << serial_manager->receive_data.curr_yaw << endl
-            //           << serial_manager->receive_data.curr_pitch << endl
-            //           << serial_manager->receive_data.shoot_speed << endl
-            //           << (char)serial_manager->receive_data.state << endl
-            //           << (char)serial_manager->receive_data.enemy_color << endl;
+            cout << serial_manager->receive_data.curr_yaw << endl
+                      << serial_manager->receive_data.curr_pitch << endl
+                      << serial_manager->receive_data.shoot_speed << endl
+                      << (char)serial_manager->receive_data.state << endl
+                      << (char)serial_manager->receive_data.enemy_color << endl;
             uint8_t state = armor_mode;
             // uint8_t state = serial_manager->receive_data.state;
             wrapper->read(src);
@@ -58,6 +63,7 @@ int main(){
             waitKey(1);
             switch(state){
                 case armor_mode :
+                    armor_finder->DebugPlotInit(&w);
                     armor_finder->run(src);
                 break;
                 case energy_mode : 

@@ -22,6 +22,10 @@ ArmorFinder::ArmorFinder(const uint8_t &color, SerialManager* serial_manager, Pr
             tracker = new KCFTracker(HOG, FIXEDWINDOW, MULTISCALE, LAB);
         }
 
+void ArmorFinder::DebugPlotInit(MainWindow *w){
+        w_ = w;
+    }
+
 void ArmorFinder::run(cv::Mat &src) {
     getsystime(frame_time); //　获取当前帧时间(不是足够精确)
 //    stateSearchingTarget(src);                    // for debug
@@ -41,7 +45,7 @@ void ArmorFinder::run(cv::Mat &src) {
                     // 从串口处获取yaw pitch
                     double yaw = this->serial_manager->receive_data.curr_yaw;
                     double pitch = this->serial_manager->receive_data.curr_pitch;
-                    serial_manager->uart_send(cv::Point2f(yaw, pitch), cv::Point2f(0,0), false);
+                    serial_manager->uart_send(cv::Point2f(yaw, -0.20632), cv::Point2f(0,0), false);
                 }
             }
             log_msg("reached this line.")
@@ -72,8 +76,15 @@ void ArmorFinder::run(cv::Mat &src) {
 
                 if(predictor->predictor_cnt > 2){
                     Point2f result = predictor->predict();
-                    serial_manager->uart_send(result, cv::Point2f(trace.yaw,trace.pitch), false);
-                    predictor->drawCurve->InsertData(result.x,trace.yaw,"predict value","origin value yaw");
+                    serial_manager->uart_send(result, cv::Point2f(trace.yaw,-0.20632), false);
+                    // predictor->drawCurve->InsertData(result.x,trace.yaw,"predict value","origin value yaw");
+                    // predictor->drawCurve->InsertData(result.y, trace.pitch, "predict pitch", "origin pitch");
+                    // w_->addPoint(trace.distance,0);
+                    // w_->addPoint(trace.yaw, 1);
+                    // w_->addPoint(trace.pitch, 0);
+                    w_->addPoint(result.x, 1);
+                    w_->addPoint(result.y, 0);
+                    w_->plot();
                 } else{
 //                    double x = trace.world_position.x;
 //                    double y = trace.world_position.y;

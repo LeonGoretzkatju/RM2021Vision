@@ -82,16 +82,16 @@ cv::Point3f Predictor::solve_pnp(Trace& trace){
         obj_pnts, img_pnts, inner_matrix, distortion_matrix, rvecs, tvecs
     );
     trace.distance = 10700.0/box.height*10.0;
-    // Rodrigues(Rod_r, RotationR);
+    // Rodrigues(Rod_r, RotationR);-10700.0/box.height*10.0
     // cout << "C(Camera center:):" << endl << -RotationR.inv()*TransMatrix << endl;//这个C果然是相机中心，十分准确
     // cout << "shiji distance                                     " << -tvecs.ptr<double>(0)[2] << endl;
-    return Point3f(tvecs.ptr<double>(0)[0], -tvecs.ptr<double>(0)[1], -10700.0/box.height*10.0);
+    return Point3f(tvecs.ptr<double>(0)[0], -tvecs.ptr<double>(0)[1], -tvecs.ptr<double>(0)[2]);
 
 }
 
 Point2f Predictor::predict(){
     Trace llast, last, now;
-    this->armor_traces.get_now3(llast,last, now);
+    this->armor_traces.get_now3(llast,now, last);
     cout << "now time" << "               " << now.time << endl;
     cout << "last time" << "                " << last.time << endl;
     cout << "llast time" << "                " << llast.time << endl;
@@ -106,20 +106,19 @@ Point2f Predictor::predict(){
     old_v_z = (last.world_position.z - llast.world_position.z) / (last.time - llast.time);
     this->x << last.world_position.x, last.world_position.y, last.world_position.z,
                old_v_x, old_v_y, old_v_z;
-    this->z << now.world_position.x, now.world_position.y, now.world_position.z,
-         v_x, v_y, v_z;
+    this->z << now.world_position.x, now.world_position.y, now.world_position.z;
     A(0, 3) = now.time - last.time;
     A(1, 4) = now.time - last.time;
     A(2, 5) = now.time - last.time;
     KF->predict(A, x);
     KF->update(x, z);
     cout << "fly distance" << "    " << now.distance <<endl;
-    float fly_time = now.distance/15.0/1000.0; // unit/seconds
+    float fly_time = now.distance/15.0/1000.0 + 0.65; // unit/seconds
 
     double predict[3];
-    // predict[0] = x[0]/1000 + x[3]*fly_time;
-    // predict[1] = x[1]/1000 + x[4]*fly_time;
-    // predict[2] = x[2]/1000 + x[5]*fly_time;
+    predict[0] = x[0]/1000 + x[3]*fly_time;
+    predict[1] = x[1]/1000 + x[4]*fly_time;
+    predict[2] = x[2]/1000 + x[5]*fly_time;
 
     return Point2f(get_yaw(x[0], x[2]), get_pitch(x[0], x[1], x[2]));
 }

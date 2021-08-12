@@ -16,17 +16,17 @@
  * 2: Warning, output both error (red) and warning log (yellow).
  * 3: Message, output both error (red) and warning log (yellow) and message (blue).
  */
-#define __log_level__   3
+#define __log_level__   0
 
 /* Macros for logger configuration. */
 #define enable_save_log_to_file(log_file_path) logger_ptr->enable_save_log_to_file(log_file_path);
 #define close_print_log_to_terminal()          logger_ptr->close_print_log_to_terminal();
 
 /* Macros for log */
-#define log_error(format, ...)                 __log_error__(format, ##__VA_ARGS__)
-#define log_warning(format, ...)               __log_warning__(format, ##__VA_ARGS__)
-#define log_msg(format, ...)                   __log_msg__(format, ##__VA_ARGS__)
-#define sync_print(format, ...)                logger_ptr->_sync_print(format, ##__VA_ARGS__)
+#define log_error(format, ...)                 __log_error__(format, ##__VA_ARGS__);
+#define log_warning(format, ...)               __log_warning__(format, ##__VA_ARGS__);
+#define log_msg(format, ...)                   __log_msg__(format, ##__VA_ARGS__);
+#define sync_print(format, ...)                logger_ptr->_sync_print(format, ##__VA_ARGS__);
 #define py_format(_format, ...)                fmt::format(_format, ##__VA_ARGS__)
 
 /* Macros for image */

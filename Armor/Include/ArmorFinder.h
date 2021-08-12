@@ -12,6 +12,7 @@
 #include <opencv2/video/tracking.hpp>
 #include "../../Tools/Include/Draw_Curve.h"
 #include "../../KCFcpp/src/kcftracker.hpp"
+#include "../../mainwindow.h"
 
 
 typedef std::vector<Armor> Armors;
@@ -33,6 +34,7 @@ private:
     int contour_area; 
     KCFTracker *tracker;
     Classifier classifier;                              // CNN分类器对象实例，用于数字识别
+    MainWindow *w_;
     int tracking_cnt;                                   // 记录追踪帧数，用于定时退出追踪
 
     SerialManager* serial_manager; // 与串口交互
@@ -49,6 +51,7 @@ public:
     ~ArmorFinder() = default;
     DrawCurve* drawCurve;
     void run(cv::Mat& src);
+    void DebugPlotInit(MainWindow *w);
 
 };
 

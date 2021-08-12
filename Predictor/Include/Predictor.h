@@ -35,8 +35,11 @@ public:
 class Predictor{
 private:
     RoundQueue<Trace, 3> armor_traces;
-    Eigen::Matrix<double,6,6> A, P, R, Q, H;
-    Eigen::Matrix<double,6,1> x, z;
+    Eigen::Matrix<double,6,6> A, P, Q;
+    Eigen::Matrix<double,3,6> H;
+    Eigen::Matrix<double,3,3> R;
+    Eigen::Matrix<double,6,1> x;
+    Eigen::Matrix<double,3,1> z;
 public:
     int predictor_cnt = 0;
     Filter* filter;
@@ -60,12 +63,9 @@ public:
              0, 0, 0, 0, 1, 0,
              0, 0, 0, 0, 0, 1;
 
-        R << 5000, 0, 0, 0, 0, 0,
-             0, 5000, 0, 0, 0, 0,
-             0, 0, 5000, 0, 0, 0,
-             0, 0, 0, 5000, 0, 0,
-             0, 0, 0, 0, 5000, 0,
-             0, 0, 0, 0, 0, 5000;
+        R << 9000, 0, 0, 
+             0,  9000,0,
+             0,  0, 9000;
 
         Q << 0.1, 0, 0, 0, 0, 0,
              0, 0.1, 0, 0, 0, 0,
@@ -76,10 +76,7 @@ public:
 
         H << 1, 0, 0, 0, 0, 0,
              0, 1, 0, 0, 0, 0,
-             0, 0, 1, 0, 0, 0,
-             0, 0, 0, 1, 0, 0,
-             0, 0, 0, 0, 1, 0,
-             0, 0, 0, 0, 0, 1;
+             0, 0, 1, 0, 0, 0;
 
         KF->init(6, 6, this->A, this->P, this->R, this->Q, this->H);
     }

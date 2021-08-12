@@ -1,13 +1,21 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 project(TJU-RM-2021)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 add_definitions(-w)
 SET(CMAKE_CXX_STANDARD 11)
 SET(CMAKE_BUILD_TYPE RELEASE)
+set(CMAKE_PREFIX_PATH "/home/nuc/Qt5.12.0/5.12.0/gcc_64/")
 add_definitions("-Wall -g")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -g")
 
 SET(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
 FIND_PACKAGE(OpenCV REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Gui Core PrintSupport XmlPatterns REQUIRED)
 FIND_PACKAGE(Threads)
 
 FIND_PACKAGE(Eigen3)
@@ -36,10 +44,12 @@ add_subdirectory(3rd/fmt EXCLUDE_FROM_ALL)
 
 
 FILE(GLOB_RECURSE sourcefiles "Other/Serial/Src/*.cpp" "Other/Camera/Src/*.cpp" "Tools/Src/*.cpp" "Armor/Src/*.cpp" "Predictor/Src/*.cpp" "Logger/Src/*.cpp")
-ADD_EXECUTABLE(TJU-RM-2021 Main.cpp ${sourcefiles} Tools/Include/Draw_Curve.h Tools/Src/Draw_Curve.cpp Predictor/Include/KalmanFilter.h Predictor/Src/KalmanFilter.cpp)
+ADD_EXECUTABLE(TJU-RM-2021 Main.cpp ${sourcefiles} Tools/Include/Draw_Curve.h Tools/Src/Draw_Curve.cpp Predictor/Include/KalmanFilter.h Predictor/Src/KalmanFilter.cpp
+              mainwindow.cpp mainwindow.h mainwindow.ui qcustomplot.cpp qcustomplot.h)
 
 TARGET_LINK_LIBRARIES(TJU-RM-2021 kcf_tracker ${CMAKE_THREAD_LIBS_INIT})
 TARGET_LINK_LIBRARIES(TJU-RM-2021 ${OpenCV_LIBS})
 
 TARGET_LINK_LIBRARIES(TJU-RM-2021 "${PROJECT_SOURCE_DIR}/Other/Camera/libMVSDK.so")
 target_link_libraries(TJU-RM-2021 fmt-header-only)
+target_link_libraries(TJU-RM-2021 Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::XmlPatterns)

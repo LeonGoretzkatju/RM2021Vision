@@ -24,7 +24,7 @@ namespace EigenKalman{
         * @函数: init
         * @描述: 初始化kalman预判参数
          */
-        void init(int state, int means, Eigen::Matrix<double, 6, 6>& _A, Eigen::Matrix<double, 6, 6>& _P, Eigen::Matrix<double, 6, 6>& _R, Eigen::Matrix<double, 6, 6>& _Q, Eigen::Matrix<double, 6, 6>& _H);
+        void init(int state, int means, Eigen::Matrix<double, 6, 6>& _A, Eigen::Matrix<double, 6, 6>& _P, Eigen::Matrix<double, 3, 3>& _R, Eigen::Matrix<double, 6, 6>& _Q, Eigen::Matrix<double, 3, 6>& _H);
         /**
         * @函数: predict
         * @描述: kalman预测
@@ -37,7 +37,7 @@ namespace EigenKalman{
         * @输入: Eigen::VectorXd z_meas 测量参数向量
         * @输入输出:Eigen::VectorXd &x 状态向量
          */
-        void update(Eigen::Matrix<double, 6, 1> &x, Eigen::Matrix<double, 6, 1> z_meas);
+        void update(Eigen::Matrix<double, 6, 1> &x, Eigen::Matrix<double, 3, 1> z_meas);
     };
 }
 
