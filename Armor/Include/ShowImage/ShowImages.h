@@ -3,6 +3,7 @@
 
 #include <opencv2/core.hpp>
 #include "../ArmorFinder.h"
+#include "../Armor.h"
 
 //
 void showArmorBoxes(std::string windows_name, const cv::Mat &src, const Armors &armor_boxes);

@@ -3,6 +3,7 @@
 
 #include "Armor.h"
 #include "Classifier.h"
+#include "../../Predictor/Include/KalmanPosFilter.h"
 #include "../../Tools/Include/systime.h"
 #include "../../Tools/Include/constants.h"
 #include "../../Other/Serial/Include/SerialManager.h"
@@ -13,6 +14,13 @@
 #include "../../Tools/Include/Draw_Curve.h"
 #include "../../KCFcpp/src/kcftracker.hpp"
 #include "../../mainwindow.h"
+#include "PidPosition.h"
+
+extern std::map<int, string> id2name;   //装甲板id到名称的map
+extern std::map<string, int> name2id;   //装甲板名称到id的map
+extern std::map<string, int> prior_blue;
+extern std::map<string, int> prior_red;
+
 
 
 typedef std::vector<Armor> Armors;
@@ -30,7 +38,8 @@ private:
     State state;                                        // 自瞄状态对象实例
     Armor target_box, last_box;                         // 目标装甲板
     int anti_switch_cnt;                                // 防止乱切目标计数器
-    // cv::Ptr<cv::Tracker> tracker;                       // tracker对象实例
+    //cv::Ptr<cv::Tracker> tracker;                       // tracker对象实例
+    PidPosition PitchPID,YawPID;              // PID控制
     int contour_area; 
     KCFTracker *tracker;
     Classifier classifier;                              // CNN分类器对象实例，用于数字识别
@@ -39,6 +48,9 @@ private:
 
     SerialManager* serial_manager; // 与串口交互
     Predictor* predictor; // 与预测器交互
+    KalmanPosFilter ArmorPosFilter;
+    Point2f lastResult;
+    Point2f predictVaule;
 
     bool findLights(const cv::Mat& src, Lights& lights);
     bool findArmors(const cv::Mat& src, Armor& box);
@@ -47,7 +59,7 @@ private:
     bool stateSearchingTarget(const cv::Mat& src);            // searching state主函数
     bool stateTrackingTarget(cv::Mat& src);             // tracking state主函数
 public:
-    ArmorFinder(const uint8_t& color, SerialManager* serial_manager, Predictor* predictor, const string &paras_folder);
+    ArmorFinder(const uint8_t& color, SerialManager* serial_manager,Predictor* predictor, const string &paras_folder);
     ~ArmorFinder() = default;
     DrawCurve* drawCurve;
     void run(cv::Mat& src);

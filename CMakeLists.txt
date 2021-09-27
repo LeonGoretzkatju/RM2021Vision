@@ -11,7 +11,10 @@ SET(CMAKE_CXX_STANDARD 11)
 SET(CMAKE_BUILD_TYPE RELEASE)
 set(CMAKE_PREFIX_PATH "/home/nuc/Qt5.12.0/5.12.0/gcc_64/")
 add_definitions("-Wall -g")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -g")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DPATH=\"\\\"${PROJECT_SOURCE_DIR}\\\"\"")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${CMAKE_SYSTEM_NAME}")
+SET(BIN_NAME "run")
 
 SET(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
 FIND_PACKAGE(OpenCV REQUIRED)
@@ -44,12 +47,14 @@ add_subdirectory(3rd/fmt EXCLUDE_FROM_ALL)
 
 
 FILE(GLOB_RECURSE sourcefiles "Other/Serial/Src/*.cpp" "Other/Camera/Src/*.cpp" "Tools/Src/*.cpp" "Armor/Src/*.cpp" "Predictor/Src/*.cpp" "Logger/Src/*.cpp")
-ADD_EXECUTABLE(TJU-RM-2021 Main.cpp ${sourcefiles} Tools/Include/Draw_Curve.h Tools/Src/Draw_Curve.cpp Predictor/Include/KalmanFilter.h Predictor/Src/KalmanFilter.cpp
-              mainwindow.cpp mainwindow.h mainwindow.ui qcustomplot.cpp qcustomplot.h)
+ADD_EXECUTABLE(${BIN_NAME} Main.cpp ${sourcefiles} Tools/Include/Draw_Curve.h Tools/Src/Draw_Curve.cpp Predictor/Include/KalmanFilter.h Predictor/Src/KalmanFilter.cpp
+              mainwindow.cpp mainwindow.h mainwindow.ui qcustomplot.cpp qcustomplot.h Predictor/Include/KalmanPosFilter.h Predictor/Src/KalmanPosFilter.cpp Predictor/Include/PidPosition.h Predictor/Src/PidPosition.cpp)
 
-TARGET_LINK_LIBRARIES(TJU-RM-2021 kcf_tracker ${CMAKE_THREAD_LIBS_INIT})
-TARGET_LINK_LIBRARIES(TJU-RM-2021 ${OpenCV_LIBS})
+TARGET_LINK_LIBRARIES(${BIN_NAME} kcf_tracker ${CMAKE_THREAD_LIBS_INIT})
+TARGET_LINK_LIBRARIES(${BIN_NAME} ${OpenCV_LIBS})
 
-TARGET_LINK_LIBRARIES(TJU-RM-2021 "${PROJECT_SOURCE_DIR}/Other/Camera/libMVSDK.so")
-target_link_libraries(TJU-RM-2021 fmt-header-only)
-target_link_libraries(TJU-RM-2021 Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::XmlPatterns)
+TARGET_LINK_LIBRARIES(${BIN_NAME} "${PROJECT_SOURCE_DIR}/Other/Camera/libMVSDK.so")
+target_link_libraries(${BIN_NAME} fmt-header-only)
+target_link_libraries(${BIN_NAME} Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::XmlPatterns)
+
+ADD_CUSTOM_TARGET(create-startup COMMAND "${PROJECT_SOURCE_DIR}/Tools/create-startup.sh" "${PROJECT_SOURCE_DIR}" "${CMAKE_BINARY_DIR}")

@@ -55,6 +55,7 @@ void showArmorBoxesClass(std::string window_names, const cv::Mat &src, const Arm
     } else if (src.type() == CV_8UC3) { //RGB 彩色
         image2show = src.clone();
     }
+
     for (const auto &box : boxes) {
         if(box.id != 0) {
             rectangle(image2show, box.armor_rect, Scalar(0, 255, 0), 1);
@@ -114,4 +115,34 @@ void showTrackSearchingPos(std::string window_names, const cv::Mat &src, const c
     }
     rectangle(image2show, pos, Scalar(0, 255, 0), 1);
     imshow(window_names, image2show);
+}
+
+void showArmorBox(std::string windows_name, const cv::Mat &src, const Armor &box) {
+    static Mat image2show;
+    if(box.armor_rect == cv::Rect2d()){
+        imshow(windows_name, src);
+    }
+    if (src.type() == CV_8UC1) { // 黑白图像
+        cvtColor(src, image2show, COLOR_GRAY2RGB);
+    } else if (src.type() == CV_8UC3) { //RGB 彩色
+        image2show = src.clone();
+    }
+    drawLightBlobs(image2show, box.lights);
+//    static FILE *fp = fopen(PROJECT_DIR"/ratio.txt", "w");
+//    if(box.light_blobs.size() == 2)
+//        fprintf(fp, "%lf %lf %lf\n", box.light_blobs[0].length, box.light_blobs[1].length, box.getBlobsDistance())
+//    cout << box.lengthDistanceRatio() << endl;
+
+    rectangle(image2show, box.armor_rect, Scalar(0, 255, 0), 3);
+
+    if (box.id == -1)
+        putText(image2show, id2name[box.id], Point(box.armor_rect.x + 2, box.armor_rect.y + 2), cv::FONT_HERSHEY_TRIPLEX, 1,
+                Scalar(0, 255, 0));
+    else if (1 <= box.id && box.id < 8)
+        putText(image2show, id2name[box.id], Point(box.armor_rect.x + 2, box.armor_rect.y + 2), cv::FONT_HERSHEY_TRIPLEX, 1,
+                Scalar(255, 0, 0));
+    else if (8 <= box.id && box.id < 15)
+        putText(image2show, id2name[box.id], Point(box.armor_rect.x + 2, box.armor_rect.y + 2), cv::FONT_HERSHEY_TRIPLEX, 1,
+                Scalar(0, 0, 255));
+    imshow(windows_name, image2show);
 }

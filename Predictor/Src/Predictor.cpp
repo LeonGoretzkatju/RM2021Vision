@@ -11,9 +11,9 @@ bool Predictor::coordinate_trans(Trace& trace){
     Matrix3d r_inverse, r_x, r_y, r_yaw, r_pitch;
 
     camera_coo << camera_pos.x, camera_pos.y, camera_pos.z;
-    cout << "                      coo                " << camera_pos.x << " "
-                                                        << camera_pos.y << " "
-                                                        << camera_pos.z << endl;
+    // cout << "                      coo                " << camera_pos.x << " "
+    //                                                     << camera_pos.y << " "
+    //                                                     << camera_pos.z << endl;
     r_x << 1, 0, 0,
            0, cos(trace.pitch), sin(trace.pitch),
            0, -sin(trace.pitch), cos(trace.pitch);
@@ -35,7 +35,7 @@ bool Predictor::coordinate_trans(Trace& trace){
     world_pos = r_inverse * camera_coo;
 
     trace.world_position = Point3f(world_pos[0], world_pos[1], world_pos[2]);
-    std::cout << "              wddd               " << trace.world_position << std::endl;
+    // std::cout << "              wddd               " << trace.world_position << std::endl;
     return true;
 }
 
@@ -85,40 +85,72 @@ cv::Point3f Predictor::solve_pnp(Trace& trace){
     // Rodrigues(Rod_r, RotationR);-10700.0/box.height*10.0
     // cout << "C(Camera center:):" << endl << -RotationR.inv()*TransMatrix << endl;//这个C果然是相机中心，十分准确
     // cout << "shiji distance                                     " << -tvecs.ptr<double>(0)[2] << endl;
-    return Point3f(tvecs.ptr<double>(0)[0], -tvecs.ptr<double>(0)[1], -tvecs.ptr<double>(0)[2]);
+    return Point3f(tvecs.ptr<double>(0)[0], -tvecs.ptr<double>(0)[1], -trace.distance);
 
 }
 
+void Predictor::predictor_init(Trace &target) {
+    if (!KF->is_Initialized)
+    {
+        KF->is_Initialized = !KF->is_Initialized;
+        auto inityaw = get_yaw(target.world_position.x,target.world_position.z);
+        auto initpitch = get_pitch(target.world_position.x,target.world_position.y,target.world_position.z);
+        KF->statePose << inityaw,initpitch,0.0,0.0;
+    }
+}
+
 Point2f Predictor::predict(){
-    Trace llast, last, now;
-    this->armor_traces.get_now3(llast,now, last);
+    Trace last, now;
+    this->armor_traces.get_now2(now, last);
     cout << "now time" << "               " << now.time << endl;
     cout << "last time" << "                " << last.time << endl;
-    cout << "llast time" << "                " << llast.time << endl;
-    double v_x, v_y, v_z;
-    double old_v_x, old_v_y, old_v_z;
+    double w_yaw,w_pitch;
+    double old_w_yaw, old_w_pitch;
+    double a_yaw,a_pitch;
     cout << "delta time" << (now.time - last.time) << endl;
-    v_x = (now.world_position.x - last.world_position.x) / (now.time - last.time);
-    v_y = (now.world_position.y - last.world_position.y) / (now.time - last.time);
-    v_z = (now.world_position.z - last.world_position.z) / (now.time - last.time);
-    old_v_x = (last.world_position.x - llast.world_position.x) / (last.time - llast.time);
-    old_v_y = (last.world_position.y - llast.world_position.y) / (last.time - llast.time);
-    old_v_z = (last.world_position.z - llast.world_position.z) / (last.time - llast.time);
-    this->x << last.world_position.x, last.world_position.y, last.world_position.z,
-               old_v_x, old_v_y, old_v_z;
-    this->z << now.world_position.x, now.world_position.y, now.world_position.z;
-    A(0, 3) = now.time - last.time;
-    A(1, 4) = now.time - last.time;
-    A(2, 5) = now.time - last.time;
-    KF->predict(A, x);
-    KF->update(x, z);
-    cout << "fly distance" << "    " << now.distance <<endl;
-    float fly_time = now.distance/15.0/1000.0 + 0.65; // unit/seconds
-
-    double predict[3];
-    predict[0] = x[0]/1000 + x[3]*fly_time;
-    predict[1] = x[1]/1000 + x[4]*fly_time;
-    predict[2] = x[2]/1000 + x[5]*fly_time;
-
-    return Point2f(get_yaw(x[0], x[2]), get_pitch(x[0], x[1], x[2]));
+    cout << "old delta time" << " " << (last.time - KF->time_stamp) << endl;
+    auto now_yaw = get_yaw(now.world_position.x,now.world_position.z);
+    auto now_pitch = get_pitch(now.world_position.x,now.world_position.y,now.world_position.z);
+    auto last_yaw = get_yaw(last.world_position.x,last.world_position.z);
+    auto last_pitch = get_pitch(last.world_position.x,last.world_position.y,last.world_position.z);
+    w_yaw = (now_yaw - last_yaw) / (now.time - last.time);
+    w_pitch = (now_pitch - last_pitch) / (now.time - last.time);
+    this->A(0, 2) = now.time - last.time;
+    this->A(1, 3) = now.time - last.time;
+    if (this->KF->first_set)
+    {
+        KF->first_set = !KF->first_set;
+        this->KF->u << 0.0,
+                0.0;
+        this->KF->B << 0.5* pow((now.time - last.time),2), 0,
+                0, 0.5*pow((now.time - last.time), 2),
+                (now.time - last.time), 0,
+                0, (now.time - last.time);
+        this->KF->measPose << now_yaw, now_pitch, w_yaw, w_pitch;
+        KF->predict();
+        KF->update();
+        this->last_yaw_speed = w_yaw;
+        this->last_pitch_speed = w_pitch;
+        this->last_time_stamp = (now.time - last.time);
+        return Point2f (KF->statePose(0),KF->statePose(1));
+    }
+    else
+    {
+        a_yaw = (w_yaw - this->last_yaw_speed)/(now.time- this->last_time_stamp);
+        a_pitch = (w_pitch - this->last_pitch_speed)/(now.time- this->last_time_stamp);
+        cout <<"delta yaw"<< "   " << ((now.time - last.time)- this->last_time_stamp) << endl;
+        this->KF->u << a_yaw,
+                a_pitch;
+        this->KF->B << 0.5* pow((now.time - last.time),2), 0,
+                0, 0.5*pow((now.time - last.time), 2),
+                (now.time - last.time), 0,
+                0, (now.time - last.time);
+        this->KF->measPose << now_yaw, now_pitch, w_yaw, w_pitch;
+        KF->predict();
+        KF->update();
+        this->last_yaw_speed = w_yaw;
+        this->last_pitch_speed = w_pitch;
+        this->last_time_stamp = now.time;
+        return Point2f (KF->statePose(0),KF->statePose(1));
+    }
 }

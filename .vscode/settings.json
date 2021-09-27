@@ -64,6 +64,13 @@
         "numeric": "cpp",
         "cfenv": "cpp",
         "cinttypes": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "format": "cpp",
+        "any": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "codecvt": "cpp",
+        "future": "cpp",
+        "variant": "cpp"
     }
 }

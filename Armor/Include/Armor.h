@@ -4,6 +4,11 @@
 #include "Light.h"
 #include <vector>
 
+// extern std::map<int, std::string> id2name;   //装甲板id到名称的map
+// extern std::map<std::string, int> name2id;   //装甲板名称到id的map
+// extern std::map<std::string, int> prior_blue;
+// extern std::map<std::string, int> prior_red;
+
 typedef std::vector<Light> Lights;
 
 class Armor{

@@ -111,7 +111,7 @@ bool ArmorFinder::findArmors(const cv::Mat &src, Armor &box) {
 
     box.armor_rect = cv::Rect2d(0, 0, 0, 0);
     box.id = -1;
-    log_msg("reached this line.")
+     log_msg("reached this line.")
 // 寻找所有可能的灯条
     if (!findLights(src, light_blobs)) {
         return false;
@@ -126,11 +126,11 @@ bool ArmorFinder::findArmors(const cv::Mat &src, Armor &box) {
         return false;
     }
 
-    if (show_armor_box) {
-        showArmorBoxes("boxes", src, armor_boxes);
-        cv::waitKey(1);
-    }
-    log_msg("reached this line.")
+    // if (show_armor_box) {
+    //     showArmorBoxes("boxes", src, armor_boxes);
+    //     cv::waitKey(1);
+    // }
+    // log_msg("reached this line.")
 
 // 如果分类器可用，则使用分类器对装甲板候选区进行筛选
     if (classifier) {
@@ -140,7 +140,7 @@ bool ArmorFinder::findArmors(const cv::Mat &src, Armor &box) {
             int c = classifier(roi);
             armor_box.id = c;
         }
-        log_msg("reached this line.")
+        // log_msg("reached this line.")
         
 // 按照优先级对装甲板进行排序
         sort(armor_boxes.begin(), armor_boxes.end(), [&](const Armor &a, const Armor &b) {
@@ -151,23 +151,23 @@ bool ArmorFinder::findArmors(const cv::Mat &src, Armor &box) {
                 return a < b;
             }
         });
-        log_msg("reached this line.")
+        // log_msg("reached this line.")
         for (auto &one_box : armor_boxes) {
             if (one_box.id != 0) {
                 box = one_box;
                 break;
             }
         }
-        log_msg("reached this line.")
+        // log_msg("reached this line.")
         if (box.armor_rect == cv::Rect2d(0, 0, 0, 0)) {
-            log_msg("reached this line.")
+            // log_msg("reached this line.")
             return false;
         }
-        log_msg("reached this line.")
+        // log_msg("reached this line.")
 
     } else { // 如果分类器不可用，则直接选取候选区中的第一个区域作为目标(往往会误识别)
         box = armor_boxes[0];
     }
-    log_msg("reached this line.")
+    // log_msg("reached this line.")
     return true;
 }

@@ -34,51 +34,49 @@ public:
 
 class Predictor{
 private:
-    RoundQueue<Trace, 3> armor_traces;
-    Eigen::Matrix<double,6,6> A, P, Q;
-    Eigen::Matrix<double,3,6> H;
-    Eigen::Matrix<double,3,3> R;
-    Eigen::Matrix<double,6,1> x;
-    Eigen::Matrix<double,3,1> z;
+    RoundQueue<Trace, 2> armor_traces;
+    Eigen::Matrix<double,4,4> A, P, Q;
+    Eigen::Matrix<double,4,4> H;
+    Eigen::Matrix<double,4,4> R;
 public:
     int predictor_cnt = 0;
     Filter* filter;
     EigenKalman::KalmanFilter* KF;
     DrawCurve* drawCurve;
+    double last_yaw_speed;
+    double last_pitch_speed;
+    double last_time_stamp;
 
     // TODO:
     Predictor() {
         this->KF = new EigenKalman::KalmanFilter();
-        A << 1, 0, 0, 1, 0, 0,
-             0, 1, 0, 0, 1, 0,
-             0, 0, 1, 0, 0, 1,
-             0, 0, 0, 1, 0, 0,
-             0, 0, 0, 0, 1, 0,
-             0, 0, 0, 0, 0, 1;
+        A << 1, 0, 1, 0,
+             0, 1, 0, 1,
+             0, 0, 1, 0,
+             0, 0, 0, 1;
 
-        P << 1, 0, 0, 0, 0, 0,
-             0, 1, 0, 0, 0, 0,
-             0, 0, 1, 0, 0, 0,
-             0, 0, 0, 1, 0, 0,
-             0, 0, 0, 0, 1, 0,
-             0, 0, 0, 0, 0, 1;
+        P << 1, 0, 0, 0,
+             0, 1, 0, 0,
+             0, 0, 1, 0,
+             0, 0, 0, 1;
 
-        R << 9000, 0, 0, 
-             0,  9000,0,
-             0,  0, 9000;
+        R << 1500, 0, 0, 0,
+             0, 1500, 0, 0,
+             0, 0, 1700, 0,
+             0, 0, 0, 1700;
 
-        Q << 0.1, 0, 0, 0, 0, 0,
-             0, 0.1, 0, 0, 0, 0,
-             0, 0, 0.05, 0, 0, 0,
-             0, 0, 0, 0.1, 0, 0,
-             0, 0, 0, 0, 0.05, 0,
-             0, 0, 0, 0, 0, 0.1;
+        Q << 1, 0, 0, 0,
+             0, 1, 0, 0,
+             0, 0, 1, 0,
+             0, 0, 0, 1,
 
-        H << 1, 0, 0, 0, 0, 0,
-             0, 1, 0, 0, 0, 0,
-             0, 0, 1, 0, 0, 0;
 
-        KF->init(6, 6, this->A, this->P, this->R, this->Q, this->H);
+        H << 1, 0, 0, 0,
+             0, 1, 0, 0,
+             0, 0, 1, 0,
+             0, 0, 0, 1;
+
+        KF->init(4, 4, this->A, this->P, this->R, this->Q, this->H);
     }
     ~Predictor() {}
 
@@ -93,6 +91,8 @@ public:
         armor_traces.push(target);
         return true;
     }
+
+    void predictor_init(Trace &target);
 
     Point2f predict();
 

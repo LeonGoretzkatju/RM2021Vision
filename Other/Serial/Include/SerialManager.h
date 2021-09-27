@@ -23,6 +23,7 @@ struct SendData{
     float origin_yaw;
     float origin_pitch;
     bool fire;          // 发射指令
+    bool ArmorFound;
 };
 
 void uart_receive(Serial *p_serial);
@@ -37,7 +38,7 @@ public:
     ReceiveData receive_data;
     SendData send_data;
 
-    void uart_send(Point2f angle, Point2f origin_angle, bool fire);
+    void uart_send(Point2f angle, Point2f origin_angle, bool fire, bool ArmorFound);
     Serial* m_serial;
 };
 

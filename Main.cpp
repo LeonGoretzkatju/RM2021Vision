@@ -30,7 +30,7 @@ int main(){
     cv::Mat src;
     // if from camera
     wrapper = new CameraWrapper(5, 100, 2);
-    // wrapper = new VideoWrapper("../../test001.avi");
+    //wrapper = new VideoWrapper("/home/nuc/111.avi");
     wrapper->init();
     while (true) {
         
@@ -40,16 +40,14 @@ int main(){
         bool change_mode = true;
         // 模式切换需要更新相机分辨率，等配置信息
 
-        const uint8_t armor_mode = 0;
-        const uint8_t energy_mode = 1;
-        int argc;char **argv = nullptr;
-        QApplication a(argc, argv);
-        MainWindow w;
-        w.show();
+        const uint8_t armor_mode = 1;
+        const uint8_t energy_mode = 0;
+        // int argc;char **argv = nullptr;
+        // QApplication a(argc, argv);
+        // MainWindow w;
+        // w.show();
 
         do{
-            systime st;
-            getsystime(st);
             cout << serial_manager->receive_data.curr_yaw << endl
                       << serial_manager->receive_data.curr_pitch << endl
                       << serial_manager->receive_data.shoot_speed << endl
@@ -58,21 +56,19 @@ int main(){
             uint8_t state = armor_mode;
             // uint8_t state = serial_manager->receive_data.state;
             wrapper->read(src);
-            imshow("show figure", src);
-            // cout << src << endl;
-            waitKey(1);
+            double t = getTickCount();
             switch(state){
                 case armor_mode :
-                    armor_finder->DebugPlotInit(&w);
+                    // armor_finder->DebugPlotInit(&w);
                     armor_finder->run(src);
                 break;
                 case energy_mode : 
                     // energy->run(src);
                 break;
             }
-            systime ed;
-            getsystime(ed);
-            cout << " fps: " << 1 / (getTimeIntervalms(ed, st) / 1000);
+            double t1=(getTickCount()-t)/getTickFrequency();
+            printf("Armor Detecting FPS: %f\n",1/t1);
+
         }while(change_mode);
         
     }

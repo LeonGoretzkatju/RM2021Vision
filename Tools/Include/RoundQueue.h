@@ -54,11 +54,13 @@ public:
         return true;
     };
 
-    bool get_now3(type& obj_new, type& obj_last, type& obj_llast) const{
-        obj_new = data[head];
-        obj_last = data[(head-1+length)%length];
-        obj_llast = data[(head-2+length)%length];
+    bool get_now2(type& obj_now, type& obj_last) const{
+        obj_now = data[(head-1+length)%length];
+        obj_last = data[head];
+    }
 
+    bool get_now(type& obj_now) const{
+        obj_now = data[(head-1+length)%length];
     }
 
     bool clear(){
