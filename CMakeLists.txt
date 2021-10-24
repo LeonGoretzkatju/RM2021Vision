@@ -14,7 +14,7 @@ add_definitions("-Wall -g")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DPATH=\"\\\"${PROJECT_SOURCE_DIR}\\\"\"")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${CMAKE_SYSTEM_NAME}")
-SET(BIN_NAME "run")
+SET(BIN_NAME "TJU-RM-2021")
 
 SET(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
 FIND_PACKAGE(OpenCV REQUIRED)
@@ -48,7 +48,7 @@ add_subdirectory(3rd/fmt EXCLUDE_FROM_ALL)
 
 FILE(GLOB_RECURSE sourcefiles "Other/Serial/Src/*.cpp" "Other/Camera/Src/*.cpp" "Tools/Src/*.cpp" "Armor/Src/*.cpp" "Predictor/Src/*.cpp" "Logger/Src/*.cpp")
 ADD_EXECUTABLE(${BIN_NAME} Main.cpp ${sourcefiles} Tools/Include/Draw_Curve.h Tools/Src/Draw_Curve.cpp Predictor/Include/KalmanFilter.h Predictor/Src/KalmanFilter.cpp
-              mainwindow.cpp mainwindow.h mainwindow.ui qcustomplot.cpp qcustomplot.h Predictor/Include/KalmanPosFilter.h Predictor/Src/KalmanPosFilter.cpp Predictor/Include/PidPosition.h Predictor/Src/PidPosition.cpp)
+              mainwindow.cpp mainwindow.h mainwindow.ui qcustomplot.cpp qcustomplot.h Predictor/Include/KalmanPosFilter.h Predictor/Src/KalmanPosFilter.cpp Predictor/Include/PidPosition.h Predictor/Src/PidPosition.cpp Other/Serial/Include/CRC_Check.h Other/Serial/Src/CRC_Check.cpp)
 
 TARGET_LINK_LIBRARIES(${BIN_NAME} kcf_tracker ${CMAKE_THREAD_LIBS_INIT})
 TARGET_LINK_LIBRARIES(${BIN_NAME} ${OpenCV_LIBS})

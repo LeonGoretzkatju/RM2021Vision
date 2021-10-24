@@ -25,7 +25,7 @@ void KalmanPosFilter::update(cv::Point2f &target){
     std::cout << "6" << std::endl;
     measurement = (cv::Mat_<float>(2,1) << target.x,target.y);
     std::cout << "64" << std::endl;
-    log_msg("reached this line.")
+    //log_msg("reached this line.")
     std::cout << "meas" << measurement << std::endl;
     KF.correct(measurement);
     std::cout << "641" << std::endl;

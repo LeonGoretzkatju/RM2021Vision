@@ -39,13 +39,14 @@ void ArmorFinder::run(cv::Mat &src) {
     getsystime(frame_time); //　获取当前帧时间(不是足够精确)
 //    stateSearchingTarget(src);                    // for debug
 //    goto end;
+    VisionData vdata;
     switch (state) {
         case SEARCHING_STATE:
             // cout << "searching state" << endl;
             if (stateSearchingTarget(src)) {
                 if ((target_box.armor_rect & cv::Rect2d(0, 0, 640, 480)) == target_box.armor_rect) { 
                     // 判断装甲板区域是否脱离图像区域
-                    log_msg("reached this line.")
+                    //log_msg("reached this line.")
                     
                     // TODO: 添加当前串口信息
                     tracker->init(target_box.armor_rect, src);
@@ -53,27 +54,33 @@ void ArmorFinder::run(cv::Mat &src) {
                     tracking_cnt = 0;
                     // cout << "into track" << endl;
                     // 从串口处获取yaw pitch
-                    double yaw = this->serial_manager->receive_data.curr_yaw;
-                    double pitch = this->serial_manager->receive_data.curr_pitch;
-                    serial_manager->uart_send(cv::Point2f(yaw, pitch), cv::Point2f(0,0), false, true);
+                    float yaw = this->serial_manager->receive_data.curr_yaw;
+                    float pitch = this->serial_manager->receive_data.curr_pitch;
+                    vdata = {yaw,pitch,0,0,0,0,0};
+                    serial_manager->TransformData(vdata);
+                    //serial_manager->uart_send(cv::Point2f(yaw, pitch), cv::Point2f(0,0), false, true);
                 }
             }
             else
             {
-                double yaw = this->serial_manager->receive_data.curr_yaw;
-                double pitch = this->serial_manager->receive_data.curr_pitch;
-                serial_manager->uart_send(cv::Point2f(yaw, pitch), cv::Point2f(0,0), false, false);
+                float yaw = this->serial_manager->receive_data.curr_yaw;
+                float pitch = this->serial_manager->receive_data.curr_pitch;
+                vdata = {yaw,pitch,0,0,0,0,0};
+                serial_manager->TransformData(vdata);
+                //serial_manager->uart_send(cv::Point2f(yaw, pitch), cv::Point2f(0,0), false, false);
             }
             // log_msg("reached this line.")
             break;
         case TRACKING_STATE:
             // cout << "tracking state" << endl;
-            if (!stateTrackingTarget(src) || ++tracking_cnt > 500) {    // 最多追踪100帧图像
+            if (!stateTrackingTarget(src) || ++tracking_cnt > 100) {    // 最多追踪100帧图像
                 state = SEARCHING_STATE;
                 predictor->clear();
-                double yaw = this->serial_manager->receive_data.curr_yaw;
-                double pitch = this->serial_manager->receive_data.curr_pitch;
-                serial_manager->uart_send(cv::Point2f(yaw, pitch), cv::Point2f(0,0), false, false);
+                float yaw = this->serial_manager->receive_data.curr_yaw;
+                float pitch = this->serial_manager->receive_data.curr_pitch;
+                vdata = {yaw,pitch,0,0,0,0,0};
+                serial_manager->TransformData(vdata);
+                //serial_manager->uart_send(cv::Point2f(yaw, pitch), cv::Point2f(0,0), false, false);
             } else {
                 // 从串口处获取yaw pitch
                 double yaw = this->serial_manager->receive_data.curr_yaw;
@@ -103,15 +110,19 @@ void ArmorFinder::run(cv::Mat &src) {
                         predictVaule = predictor->predict();
                         Point2f result = cv::Point2f(predictVaule.x,this->serial_manager->receive_data.curr_pitch) ;
                         cout <<"predict yaw" << " " << predictVaule.x << endl;
-                        serial_manager->uart_send(result, cv::Point2f(trace.yaw,trace.pitch), false, true);
+                        vdata = {(float )result.x, (float )result.y,0,0,0,0,0};
+                        ArmorFinder::serial_manager->TransformData(vdata);
+                        //serial_manager->uart_send(result, cv::Point2f(trace.yaw,trace.pitch), false, true);
                         predictor->drawCurve->InsertData(result.x,trace.yaw,"predict value","origin value yaw");
                     } else{
                         double x = trace.world_position.x;
                         double y = trace.world_position.y;
                         double z = trace.world_position.z;
-                        double yaw = get_yaw(x, z);
-                        double pitch = get_pitch(x, y, z);
-                        serial_manager->uart_send(cv::Point2f(this->serial_manager->receive_data.curr_yaw, this->serial_manager->receive_data.curr_pitch), cv::Point2f(trace.yaw,trace.pitch), false, true);
+                        float yaw = get_yaw(x, z);
+                        float pitch = get_pitch(x, y, z);
+                        vdata = {yaw,pitch,0,0,0,0,0};
+                        serial_manager->TransformData(vdata);
+                        //serial_manager->uart_send(cv::Point2f(this->serial_manager->receive_data.curr_yaw, this->serial_manager->receive_data.curr_pitch), cv::Point2f(trace.yaw,trace.pitch), false, true);
                     }
                     predictor->predictor_cnt ++;
                 }

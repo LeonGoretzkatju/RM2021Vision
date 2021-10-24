@@ -111,7 +111,7 @@ bool ArmorFinder::findArmors(const cv::Mat &src, Armor &box) {
 
     box.armor_rect = cv::Rect2d(0, 0, 0, 0);
     box.id = -1;
-     log_msg("reached this line.")
+     //log_msg("reached this line.")
 // 寻找所有可能的灯条
     if (!findLights(src, light_blobs)) {
         return false;

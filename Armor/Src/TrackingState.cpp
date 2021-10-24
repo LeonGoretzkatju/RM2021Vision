@@ -35,7 +35,7 @@ bool ArmorFinder::stateTrackingTarget(cv::Mat &src) {
         }
         // std::cout << target_box.getCenter().x << " " << target_box.getCenter().y << std::endl;
         // tracker = KCFTracker::create();
-        // tracker->init(target_box.armor_rect,src);
+        tracker->init(target_box.armor_rect,src);
     }else{    // 如果没有成功搜索目标，则使用判断是否跟丢。
         roi = src(pos).clone();
         if(classifier){ // 分类器可用，使用分类器判断。

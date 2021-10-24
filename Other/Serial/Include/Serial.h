@@ -24,6 +24,7 @@ public:
     bool init_port(int n_speed = 115200, char n_event = 'N', int n_bits = 8, int n_stop = 1);
     bool write_data(const unsigned char* p_data, unsigned int length);
     bool read_data(unsigned char* buffer, unsigned int length);
+    void send_data(unsigned char Tdata[30]);
 
 };
 

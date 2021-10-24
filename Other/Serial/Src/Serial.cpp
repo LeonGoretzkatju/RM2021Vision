@@ -185,3 +185,7 @@ bool Serial::read_data(unsigned char* buffer, unsigned int length){
     }
     return true;
 }
+
+void Serial::send_data(unsigned char *Tdata) {
+    write(fd,Tdata,22);
+}

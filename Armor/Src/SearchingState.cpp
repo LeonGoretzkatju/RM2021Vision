@@ -3,10 +3,10 @@
 #include "log.hpp"
 
 bool ArmorFinder::stateSearchingTarget(const cv::Mat &src) {
-     log_msg("reached this line.")
+     //log_msg("reached this line.")
 
     if (findArmors(src, target_box)) { // 在原图中寻找目标，并返回是否找到
-         log_msg("reached this line.")
+         //log_msg("reached this line.")
         if (last_box.armor_rect != cv::Rect2d() &&
             (getPointLength(last_box.getCenter() - target_box.getCenter()) > last_box.armor_rect.height * 2.0) &&
             anti_switch_cnt++ < 3) { // 判断当前目标和上次有效目标是否为同一个目标
